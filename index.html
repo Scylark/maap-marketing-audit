@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marketing Audit: MAAP</title>
+  <meta name="robots" content="noindex, nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -503,6 +504,37 @@
   </style>
 </head>
 <body>
+
+<!-- PASSWORD GATE -->
+<div id="auth-gate" style="position:fixed;inset:0;z-index:9999;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">
+  <div style="text-align:center;max-width:360px;padding:2rem;">
+    <img src="Maap_logo.png" alt="MAAP" style="height:32px;filter:brightness(0) invert(1);margin-bottom:2rem;">
+    <p style="color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:2rem;">Marketing Audit</p>
+    <input id="auth-input" type="password" placeholder="Enter password" autofocus
+      style="width:100%;padding:0.8rem 1rem;background:#2d2d2d;border:1px solid #444;border-radius:6px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;text-align:center;letter-spacing:0.05em;"
+      onkeydown="if(event.key==='Enter')checkAuth()">
+    <button onclick="checkAuth()"
+      style="width:100%;margin-top:0.75rem;padding:0.8rem;background:#7000FF;color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;letter-spacing:0.03em;">Access Report</button>
+    <p id="auth-error" style="color:#EF4444;font-size:0.8rem;margin-top:1rem;display:none;">Incorrect password</p>
+    <p style="color:rgba(255,255,255,0.2);font-size:0.65rem;margin-top:2rem;">Prepared by Manual Focus</p>
+  </div>
+</div>
+<script>
+function checkAuth(){
+  const input=document.getElementById('auth-input').value;
+  // Simple hash comparison to avoid plaintext password in source
+  let hash=0;for(let i=0;i<input.length;i++){hash=((hash<<5)-hash)+input.charCodeAt(i);hash|=0;}
+  if(hash===-236691387){
+    document.getElementById('auth-gate').style.display='none';
+    sessionStorage.setItem('maap-auth','1');
+  } else {
+    document.getElementById('auth-error').style.display='block';
+    document.getElementById('auth-input').style.borderColor='#EF4444';
+    setTimeout(()=>{document.getElementById('auth-error').style.display='none';document.getElementById('auth-input').style.borderColor='#444';},2000);
+  }
+}
+if(sessionStorage.getItem('maap-auth')==='1'){document.getElementById('auth-gate').style.display='none';}
+</script>
 
 <button class="hamburger" onclick="document.querySelector('.sticky-nav').classList.toggle('open')">&#9776;</button>
 
