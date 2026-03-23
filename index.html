@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing Audit: MAAP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --brand: #1a1a1a;
+      --brand-light: #2d2d2d;
+      --lime: #ccfd50;
+      --lime-dark: #a8d43a;
+      --lime-light: #f4ffd9;
+      --purple: #7000FF;
+      --purple-light: #f0e6ff;
+      --purple-dark: #5800cc;
+      --text: #333;
+      --text-light: #64748B;
+      --bg: #fff;
+      --bg-alt: #FAFAFA;
+      --border: #E2E8F0;
+      --green: #10B981;
+      --amber: #F59E0B;
+      --blue: #7000FF;
+      --red: #EF4444;
+      --nav-width: 260px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* NAV */
+    .sticky-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--nav-width);
+      height: 100vh;
+      background: var(--brand);
+      padding: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 2rem 1.5rem 1.5rem;
+      background: linear-gradient(135deg, var(--brand) 0%, #2a1a3e 100%);
+      border-bottom: 2px solid var(--lime);
+    }
+
+    .nav-header img { height: 24px; filter: brightness(0) invert(1); display: block; margin-bottom: 0.6rem; }
+    .nav-header span { color: rgba(255,255,255,0.4); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+
+    .sticky-nav ul { list-style: none; padding: 1rem 0; }
+
+    .sticky-nav .nav-link {
+      display: block;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.78rem;
+      font-weight: 400;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
+
+    .sticky-nav .nav-link:hover {
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .sticky-nav .nav-link.active {
+      color: var(--lime);
+      border-left-color: var(--lime);
+      background: rgba(204,253,80,0.06);
+      font-weight: 500;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      margin-left: var(--nav-width);
+      max-width: 940px;
+      padding: 0 3rem 4rem;
+    }
+
+    /* HEADER */
+    .report-header {
+      padding: 3rem 0;
+      margin-bottom: 0;
+      border-bottom: none;
+      position: relative;
+    }
+
+    .report-header-inner {
+      background: var(--brand);
+      border-radius: 12px;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .report-header-inner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(112,0,255,0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .report-header-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(204,253,80,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .report-header img { height: 36px; filter: brightness(0) invert(1); margin-bottom: 1.5rem; display: block; position: relative; z-index: 1; }
+
+    .report-header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      position: relative;
+      z-index: 1;
+    }
+
+    .report-header .subtitle {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .report-header .meta {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    .report-header .meta span {
+      display: inline-block;
+      margin-right: 2rem;
+      background: rgba(255,255,255,0.08);
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+    }
+
+    .data-sources {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .data-sources strong { color: rgba(255,255,255,0.6); }
+
+    /* SECTIONS */
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--lime);
+      display: inline-block;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--brand);
+      margin: 2rem 0 0.75rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    p { margin-bottom: 1rem; }
+
+    /* INSIGHT CALLOUTS */
+    .insight-callout {
+      display: flex;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--purple-light);
+      border-left: 3px solid var(--purple);
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+
+    .insight-callout .insight-icon {
+      font-weight: 700;
+      color: #fff;
+      background: var(--purple);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .insight-callout .insight-text {
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .insight-callout .insight-text strong {
+      color: var(--purple-dark);
+    }
+
+    /* TABLES */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.84rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      background: var(--brand);
+      padding: 0.7rem 1rem;
+      text-align: left;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      border-bottom: none;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .comparison-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .comparison-table tbody tr:last-child td { border-bottom: none; }
+
+    .comparison-table tr:hover td { background: #f9f9fb; }
+
+    .comparison-table .brand-col {
+      background: rgba(112, 0, 255, 0.04);
+      font-weight: 500;
+    }
+
+    .comparison-table tr:hover .brand-col { background: rgba(112, 0, 255, 0.07); }
+
+    .comparison-table .metric-label {
+      font-weight: 500;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* CHARTS */
+    .chart-container {
+      position: relative;
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--bg-alt);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .chart-container canvas {
+      max-height: 400px;
+    }
+
+    .chart-title {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* DETAIL PANELS */
+    details.detail-panel {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    details.detail-panel summary {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--purple);
+      background: var(--bg-alt);
+      border-radius: 8px;
+      font-size: 0.88rem;
+    }
+
+    details.detail-panel[open] summary {
+      border-bottom: 1px solid var(--border);
+      border-radius: 8px 8px 0 0;
+    }
+
+    details.detail-panel .detail-content {
+      padding: 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    /* SWOT */
+    .swot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+
+    .swot-cell {
+      padding: 1.5rem;
+      background: var(--bg);
+    }
+
+    .swot-cell h4 {
+      margin: 0 0 0.75rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .swot-cell ul { list-style: none; padding: 0; }
+
+    .swot-cell li {
+      padding: 0.35rem 0;
+      font-size: 0.83rem;
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .swot-cell li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+    }
+
+    .swot-strengths { border-top: 3px solid var(--lime); }
+    .swot-strengths h4 { color: var(--lime-dark); }
+    .swot-strengths li::before { background: var(--lime); }
+
+    .swot-weaknesses { border-top: 3px solid var(--amber); }
+    .swot-weaknesses h4 { color: var(--amber); }
+    .swot-weaknesses li::before { background: var(--amber); }
+
+    .swot-opportunities { border-top: 3px solid var(--purple); }
+    .swot-opportunities h4 { color: var(--purple); }
+    .swot-opportunities li::before { background: var(--purple); }
+
+    .swot-threats { border-top: 3px solid var(--red); }
+    .swot-threats h4 { color: var(--red); }
+    .swot-threats li::before { background: var(--red); }
+
+    /* BCG GRID */
+    .bcg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+
+    .bcg-cell {
+      padding: 1.5rem;
+      background: var(--bg);
+    }
+
+    .bcg-cell h4 {
+      margin: 0 0 0.5rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+    }
+
+    .bcg-cell .bcg-items { font-size: 0.9rem; }
+
+    .bcg-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-left: var(--nav-width);
+      max-width: 940px;
+      padding: 2.5rem 3rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    footer .footer-inner {
+      background: var(--bg-alt);
+      border-radius: 10px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+
+    footer .footer-brand {
+      font-weight: 700;
+      color: var(--brand);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* MOBILE */
+    .hamburger { display: none; }
+
+    @media (max-width: 1024px) {
+      .sticky-nav {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+        z-index: 1000;
+      }
+      .sticky-nav.open { transform: translateX(0); }
+      .main-content, footer { margin-left: 0; padding: 0 1.25rem 3rem; }
+      .report-header-inner { padding: 2rem; border-radius: 8px; }
+      .hamburger {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--brand);
+        color: var(--lime);
+        border: none;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+    }
+
+    @media print {
+      .sticky-nav, .hamburger { display: none; }
+      .main-content, footer { margin-left: 0; }
+      .report-header-inner { background: #fff; color: #000; }
+      .report-header-inner::before, .report-header-inner::after { display: none; }
+      .report-header h1, .report-header .subtitle, .report-header .meta span { color: #000; }
+      .report-header img { filter: none; }
+      details[open] summary { display: none; }
+      .detail-content { display: block !important; }
+      canvas { max-width: 100%; page-break-inside: avoid; }
+      section { page-break-before: auto; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="hamburger" onclick="document.querySelector('.sticky-nav').classList.toggle('open')">&#9776;</button>
+
+<nav class="sticky-nav">
+  <div class="nav-header"><img src="Maap_logo.png" alt="MAAP"><span>Marketing Audit</span></div>
+  <ul>
+    <li><a href="#executive-summary" class="nav-link active">Executive Summary</a></li>
+    <li><a href="#brand-overview" class="nav-link">Brand Overview</a></li>
+    <li><a href="#market-context" class="nav-link">Market & Category</a></li>
+    <li><a href="#audience-profile" class="nav-link">Audience Profile</a></li>
+    <li><a href="#competitive-landscape" class="nav-link">Competitive Landscape</a></li>
+    <li><a href="#product-analysis" class="nav-link">Product Analysis</a></li>
+    <li><a href="#category-entry-points" class="nav-link">Category Entry Points</a></li>
+    <li><a href="#content-editorial" class="nav-link">Content & Editorial</a></li>
+    <li><a href="#pr-earned-media" class="nav-link">PR & Earned Media</a></li>
+    <li><a href="#paid-social" class="nav-link">Paid Social</a></li>
+    <li><a href="#messaging-review" class="nav-link">Messaging Review</a></li>
+    <li><a href="#seo-geo" class="nav-link">SEO & GEO</a></li>
+    <li><a href="#swot" class="nav-link">SWOT Summary</a></li>
+    <li><a href="#strategic-implications" class="nav-link">Strategic Implications</a></li>
+  </ul>
+</nav>
+
+<main class="main-content">
+
+<header class="report-header">
+  <div class="report-header-inner">
+    <img src="Maap_logo.png" alt="MAAP">
+    <h1>Marketing Audit</h1>
+    <p class="subtitle">Situational analysis for strategic planning</p>
+    <div class="meta">
+      <span>March 2026</span>
+      <span>UK & Europe</span>
+    </div>
+    <div class="data-sources">
+      <strong>Data sources:</strong> DataForSEO (keyword rankings, SERP analysis), web research, public financial filings, trade press, brand websites, social media platforms. SimilarWeb data not provided.
+    </div>
+  </div>
+</header>
+
+<!-- EXECUTIVE SUMMARY -->
+<section id="executive-summary">
+  <h2>Executive Summary</h2>
+  <p>MAAP is a ten-year-old Australian brand that has punched significantly above its weight in the premium cycling apparel category. With approximately $15M in annual revenue and 161 employees, it operates at a fraction of the scale of Rapha (roughly $120M revenue, 457 employees) yet commands a comparable level of brand heat among serious cyclists. The 2025 partnership with GreenEDGE Cycling, bringing MAAP onto the WorldTour as the technical supplier for Team Jayco AlUla, represents the single most significant strategic move in the brand's history and lands at precisely the right moment: Rapha has exited the WorldTour after ending its EF Pro Cycling partnership, leaving a visible gap in the premium cycling apparel conversation at the sport's highest level.</p>
+
+  <p>The brand's physical retail network is impressively global for a business of this size, with nine LaB locations spanning Melbourne, Sydney, Berlin, Amsterdam, Los Angeles, Singapore, Hong Kong, Taipei, and Seoul. In the UK and European market specifically, however, MAAP's physical presence is limited to just two stores (Berlin and Amsterdam), with no UK flagship. This is a notable gap given the brand names the UK as a "major market" and that Rapha, despite closing five clubhouses, still operates the largest premium cycling retail network in the region.</p>
+
+  <p>MAAP's product strategy is sound. The range covers road performance (Pro and Evade lines), the growing Alt_Road gravel segment, and off-bike lifestyle, with price points sitting squarely in the premium bracket: jerseys from £155 to £185, bib shorts from £225 to £260. These prices are competitive with Pas Normal Studios and slightly below Rapha's Pro Team tier, while significantly above entry-premium brands like Le Col's Sport range. The brand's investment in proprietary fabric technologies, notably AARTERO Flyte for aerodynamic performance, gives it a credible technical story to tell alongside the aesthetic one.</p>
+
+  <p>The competitive landscape is shifting in MAAP's favour. Rapha, the category's dominant player, is in its eighth consecutive year of losses, closing stores and restructuring. Le Col has lost its founder and been acquired by HEAD Group, bringing strategic uncertainty. Gore Wear has exited the market entirely. Meanwhile, Pas Normal Studios is the most direct competitive threat: a near-identical founding vintage (also 2014), a similar aesthetic sensibility, and an aggressive retail expansion programme with seven flagship stores. Assos remains the heritage authority, having secured the EF Pro Cycling WorldTour deal vacated by Rapha. Castelli holds the traditional Italian performance position but lacks the lifestyle brand energy of the newer entrants.</p>
+
+  <p>Digitally, MAAP's brand-building instincts have been spot on: 348K Instagram followers (more than the 50-year-old Assos) demonstrates the power of the brand's visual identity and content. The next frontier is organic search, where MAAP's presence doesn't yet match its brand strength. DataForSEO keyword analysis shows 7 top-10 UK rankings for MAAP, compared to 38 for Le Col and 30 for Castelli, representing substantial untapped growth. Women's cycling search terms in particular (48,000+ combined monthly searches for variants of "women's cycling shorts") represent an opportunity to align MAAP's search visibility with its investment in women's cycling through the Liv AlUla Jayco sponsorship. Organic search is the single largest digital growth opportunity identified in this audit.</p>
+
+  <p>The biggest strategic question for MAAP in Europe is whether the WorldTour visibility, combined with its existing brand momentum, can convert into meaningful market share growth before the competitive window closes. The brand has the product, the aesthetic, and now the racing credibility. What it needs is a sharper UK/European distribution strategy, a serious investment in organic search visibility, and a clear decision on whether to open a London flagship to challenge Rapha on its home ground.</p>
+</section>
+
+<!-- BRAND OVERVIEW -->
+<section id="brand-overview">
+  <h2>Brand Overview</h2>
+
+  <h3>Founding and Heritage</h3>
+  <p>MAAP was founded in 2014 in Melbourne, Australia by Oliver Cousins and Jarrad Smith. Cousins brought a design background having worked as a design director at Stussy, Mambo, and Globe. Smith had spent a decade immersed in competitive cycling, racing himself, managing race teams, and producing team gear in Italy. The combination of fashion industry experience and deep cycling credibility gave MAAP a distinctive starting point: an Australian brand that could match the technical standards of European incumbents while bringing a fresh design perspective.</p>
+
+  <p>The founding thesis was clear: the premium cycling apparel market was dominated by European brands, and there was space for a new voice. Ten years on, MAAP has become Australia's largest cycling apparel company, with major markets in the US, UK, Germany, and Southeast Asia.</p>
+
+  <h3>Operations and Supply Chain</h3>
+  <p>MAAP is headquartered in Port Melbourne, Victoria. The brand designs in Melbourne and manufactures primarily in Italy, sourcing performance textiles from Italian and Swiss fabric mills. This European manufacturing base gives MAAP supply chain proximity to its European markets and access to the same fabric innovation ecosystem as competitors like Castelli and Assos.</p>
+
+  <h3>Physical Retail: The LaB Network</h3>
+  <p>MAAP operates nine LaB stores globally. These are positioned as community spaces at the intersection of cycling culture and contemporary creative culture, not just retail outlets. Each LaB typically hosts group rides and community events.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Location</th><th>Address</th><th>Market</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Melbourne</td><td>33 Wellington St, Collingwood</td><td>Home market</td></tr>
+      <tr><td>Sydney</td><td>60 Oxford St, Darlinghurst (opened 2025, largest LaB)</td><td>Home market</td></tr>
+      <tr><td>Berlin</td><td>Alte Schonhauser Str. 7</td><td>Europe</td></tr>
+      <tr><td>Amsterdam</td><td>Reestraat 9</td><td>Europe</td></tr>
+      <tr><td>Los Angeles</td><td>910 Abbot Kinney Blvd, Venice (opened 2025)</td><td>North America</td></tr>
+      <tr><td>Singapore</td><td>31 Tg Pagar Rd</td><td>Asia</td></tr>
+      <tr><td>Hong Kong</td><td>Des Voeux Rd Central, Man Yee Building</td><td>Asia</td></tr>
+      <tr><td>Taipei</td><td>Dunhua S. Rd, Da'an District</td><td>Asia</td></tr>
+      <tr><td>Seoul</td><td>Apgujeong-ro, Seoul</td><td>Asia</td></tr>
+    </tbody>
+  </table>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Key observation:</strong> Five of nine LaB locations are in Asia-Pacific, two in Europe (neither in the UK), and one in North America. For a brand that identifies the UK as a "major market," the absence of a London LaB is conspicuous, especially when Rapha operates multiple UK clubhouses and Pas Normal Studios has a Copenhagen flagship.</div>
+  </div>
+
+  <h3>Company Scale</h3>
+  <p>MAAP employs approximately 161 people across six continents, with estimated annual revenue of $15M (USD). The company is privately held and has not raised external funding, suggesting it has grown organically on its own cash flow. This is a meaningful distinction from venture-backed competitors and signals financial discipline, though it also limits the speed at which the brand can scale retail and marketing operations.</p>
+</section>
+
+<!-- MARKET CONTEXT -->
+<section id="market-context">
+  <h2>Market and Category Context</h2>
+
+  <h3>Market Sizing</h3>
+  <p>Market size estimates for cycling apparel vary considerably by source and definition. The most credible estimates for the global cycling apparel market cluster around $2.3-4.0 billion in 2025, with a CAGR of 6-8% projected through the early 2030s. Europe accounts for approximately 32% of the global market, placing the European cycling apparel market at roughly $750-770 million.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Level</th><th>Estimate</th><th>Basis</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-label">TAM (Global cycling apparel)</td><td>$2.3-4.0 billion</td><td>Fortune Business Insights, SkyQuest, Business Research Insights</td></tr>
+      <tr><td class="metric-label">SAM (European premium cycling apparel)</td><td>$250-350 million</td><td>Estimated at 35-45% of European market, adjusted for premium segment</td></tr>
+      <tr><td class="metric-label">SOM (UK/Europe, reachable by MAAP)</td><td>$15-30 million</td><td>Based on current distribution, brand awareness, and growth trajectory</td></tr>
+    </tbody>
+  </table>
+
+  <p>The premium segment (brands pricing jerseys above £100 and bib shorts above £150) represents the fastest-growing slice of the market, driven by cycling's evolution from sport to lifestyle identity. Professional cycling apparel accounts for approximately 60% of the total market, with amateur/recreational making up the remaining 40%.</p>
+
+  <h3>Key Market Trends</h3>
+
+  <h4>Gravel and Alt_Road Expansion</h4>
+  <p>Gravel cycling continues to grow as a discipline, with dedicated events, media coverage, and consumer demand for versatile apparel that works on mixed terrain. MAAP's Alt_Road line is well-positioned here, as is Pas Normal Studios with its PAS Racing gravel team sponsorship.</p>
+
+  <h4>E-Bike Influence</h4>
+  <p>Electric bicycles accounted for 67% of the European bicycle market in 2025. E-bike riders are creating demand for apparel that blends performance features with commuter-friendly versatility, a segment where traditional race-focused brands have less relevance but where lifestyle-adjacent brands like MAAP could expand.</p>
+
+  <h4>Sustainability Expectations</h4>
+  <p>Consumers increasingly expect eco-friendly materials (recycled polyester, organic fabrics) and transparent supply chains. MAAP states that "sustainability defines everything we do," but specific certifications, recycled content percentages, and supply chain transparency reporting are not prominently featured on the website.</p>
+
+  <h4>Direct-to-Consumer Dominance</h4>
+  <p>Premium cycling apparel has shifted heavily toward DTC models, with brands using physical retail as brand experience rather than primary sales channel. This suits MAAP's LaB concept but puts pressure on wholesale relationships and third-party retail partnerships.</p>
+
+  <h3>PESTLE Summary</h3>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Factor</th><th>Implication for MAAP</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-label">Political</td><td>EU cycling infrastructure investment is growing, boosting participation. Post-Brexit trade friction adds complexity for UK distribution of Italian-manufactured goods. Government cycling strategies in Netherlands, Denmark, and Germany create favourable market conditions.</td></tr>
+      <tr><td class="metric-label">Economic</td><td>Inflationary pressure on discretionary spending has slowed growth in the mid-market, but premium segment is more resilient. Rapha's revenue decline suggests even premium isn't immune. Currency fluctuations (AUD/GBP/EUR) affect margin given Australian HQ and Italian manufacturing.</td></tr>
+      <tr><td class="metric-label">Social</td><td>Cycling participation in Europe is trending upward. Women's cycling is growing significantly, driven by visibility of women's professional racing. The "cycling as identity" trend favours brands with strong aesthetic positioning like MAAP and PNS.</td></tr>
+      <tr><td class="metric-label">Technological</td><td>Fabric innovation (aerodynamic texturing, lightweight composites) is a competitive differentiator. MAAP's AARTERO Flyte technology and ALUULA Graflyte partnerships signal commitment to technical leadership. DTC e-commerce platforms enable global reach from a single HQ. The rapid advancement of AI and autonomous tools is reshaping how brands operate, from content production and customer service to supply chain management and market analysis. Brands that embrace these tools early will gain significant agility and cost advantages, particularly smaller teams like MAAP's that can move faster than legacy competitors burdened by larger, slower organisations.</td></tr>
+      <tr><td class="metric-label">Legal</td><td>EU sustainability reporting requirements (CSRD) and textile regulations are tightening. Brands manufacturing in Europe have an advantage in compliance visibility. Extended producer responsibility schemes may affect product lifecycle costs.</td></tr>
+      <tr><td class="metric-label">Environmental</td><td>Consumer demand for recycled materials and circular economy models is growing. MAAP has stated its commitment to sustainability; the opportunity is to add specificity (certifications, targets, reporting) to stand out from competitors making similar claims.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- AUDIENCE PROFILE -->
+<section id="audience-profile">
+  <h2>Audience Profile</h2>
+
+  <p>Without SimilarWeb data, audience profiling is based on public signals: social media demographics, product positioning, price points, retail locations, and sponsorship strategy. A verified audience analysis with SimilarWeb would significantly strengthen this section.</p>
+
+  <h3>Inferred Core Audience</h3>
+  <p>MAAP's product range, pricing (£155-£260 for core items), and aesthetic position the brand for a specific rider: serious about cycling performance, but equally serious about how they look doing it. The co-founders' backgrounds in streetwear and fashion (Stussy, Mambo, Globe) signal a brand that speaks to riders who see cycling as part of a broader cultural identity, not just a sport.</p>
+
+  <h4>Likely demographic profile:</h4>
+  <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+    <li><strong>Age:</strong> 28-45, with a skew toward the younger end of the premium cycling demographic</li>
+    <li><strong>Gender:</strong> Predominantly male, though MAAP runs full women's ranges and has invested in women's team sponsorships (Lifeplus-Wahoo, Liv AlUla Jayco)</li>
+    <li><strong>Income:</strong> Upper-middle to high disposable income. Willing to spend £400+ on a kit (jersey plus bibs)</li>
+    <li><strong>Cycling style:</strong> Road-focused with growing gravel/Alt_Road interest. Rides 3-5 times per week. Likely participates in sportives or club rides rather than competitive racing</li>
+    <li><strong>Cultural markers:</strong> Design-conscious, values aesthetics alongside performance. Cross-shops with fashion-forward sportswear brands. Likely engages with cycling media and culture beyond just equipment reviews</li>
+  </ul>
+
+  <h3>Geographic Distribution (Inferred)</h3>
+  <p>MAAP's LaB locations and stated "major markets" suggest the following geographic weighting: Australia (home market, highest brand awareness), US (LA store opened 2025, growing market), UK and Germany (identified as major markets, served via e-commerce and wholesale), and Asia-Pacific (five LaB locations suggest significant investment in this region).</p>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Recommendation:</strong> Connect SimilarWeb for the next audit iteration. The difference between "who MAAP thinks its audience is" and "who actually visits the website" is often where the most actionable insights live. Demographic and interest data would also validate whether the WorldTour partnership is reaching the right audience segments.</div>
+  </div>
+</section>
+
+<!-- COMPETITIVE LANDSCAPE -->
+<section id="competitive-landscape">
+  <h2>Competitive Landscape</h2>
+
+  <p>The competitive set spans six brands that genuinely compete for MAAP's customer: Rapha as the category leader, Pas Normal Studios as the closest aesthetic and positioning match, Assos as the heritage performance authority, Castelli as the Italian technical incumbent, Le Col as the mid-premium British challenger, and the now-defunct Gore Wear whose exit creates market opportunity.</p>
+
+  <h3>Competitor Overview</h3>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="brand-col">MAAP</th>
+        <th>Rapha</th>
+        <th>Pas Normal Studios</th>
+        <th>Assos</th>
+        <th>Castelli</th>
+        <th>Le Col</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-label">Founded</td>
+        <td class="brand-col">2014</td>
+        <td>2004</td>
+        <td>2014</td>
+        <td>1976</td>
+        <td>1876/1974</td>
+        <td>2011</td>
+      </tr>
+      <tr>
+        <td class="metric-label">HQ</td>
+        <td class="brand-col">Melbourne, AU</td>
+        <td>London, UK</td>
+        <td>Copenhagen, DK</td>
+        <td>Stabio, CH</td>
+        <td>Fonzaso, IT</td>
+        <td>London/Milan</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Est. Revenue</td>
+        <td class="brand-col">~$15M</td>
+        <td>~£96M ($120M)</td>
+        <td>Undisclosed (est. $15-25M)</td>
+        <td>Undisclosed (est. $50-80M)</td>
+        <td>Est. $25-100M (MVC Group)</td>
+        <td>Undisclosed (acquired by HEAD)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Employees</td>
+        <td class="brand-col">~161</td>
+        <td>~457</td>
+        <td>~112-115</td>
+        <td>~200+</td>
+        <td>~250+ (MVC Group)</td>
+        <td>~100 (pre-acquisition)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Manufacturing</td>
+        <td class="brand-col">Italy</td>
+        <td>Multiple (Italy, Portugal, Asia)</td>
+        <td>Europe</td>
+        <td>Switzerland, Europe</td>
+        <td>Italy (Fonzaso)</td>
+        <td>Italy, Europe</td>
+      </tr>
+      <tr>
+        <td class="metric-label">WorldTour Team</td>
+        <td class="brand-col">Jayco AlUla (2025+)</td>
+        <td>None (exited after EF 2025)</td>
+        <td>None (gravel focus: PAS Racing)</td>
+        <td>EF Pro Cycling (2026+)</td>
+        <td>Soudal-QuickStep</td>
+        <td>None (lost BORA 2024)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Own Stores</td>
+        <td class="brand-col">9 LaB locations</td>
+        <td>~17 Clubhouses (post closures)</td>
+        <td>7 flagships</td>
+        <td>Boutiques + wholesale</td>
+        <td>Primarily wholesale</td>
+        <td>Online-focused</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Positioning</td>
+        <td class="brand-col">Performance + design culture</td>
+        <td>Cycling lifestyle + community</td>
+        <td>Minimalist Scandi performance</td>
+        <td>Swiss precision, total comfort</td>
+        <td>Italian racing heritage</td>
+        <td>Performance, data-driven</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Social Media Comparison</h3>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th class="brand-col">MAAP</th>
+        <th>Rapha</th>
+        <th>PNS</th>
+        <th>Assos</th>
+        <th>Castelli</th>
+        <th>Le Col</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-label">Instagram (main)</td>
+        <td class="brand-col">348K</td>
+        <td>733K</td>
+        <td>306K</td>
+        <td>163K</td>
+        <td>318K</td>
+        <td>75K</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Instagram (secondary)</td>
+        <td class="brand-col">39K (@maap.rides)</td>
+        <td>Multiple regional</td>
+        <td>Store accounts (5-12K each)</td>
+        <td>Regional (1-6K each)</td>
+        <td>Regional (2-12K each)</td>
+        <td>5.7K (@lecolcyclingclub)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Relative strength</td>
+        <td class="brand-col">Strong for size</td>
+        <td>Category leader</td>
+        <td>Close to MAAP</td>
+        <td>Underweight vs heritage</td>
+        <td>Solid, heritage-driven</td>
+        <td>Weakest in set</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Key finding:</strong> MAAP's 348K Instagram following is remarkable for a brand with $15M revenue. It has more followers than Assos (a 50-year-old Swiss institution) and is within striking distance of Castelli (318K). Per dollar of revenue, MAAP's social media presence is the most efficient in the competitive set. This suggests the brand's visual identity and content resonate strongly with the cycling audience.</div>
+  </div>
+
+  <h3>Pro Team Sponsorships and Talent</h3>
+
+  <p>Professional team sponsorship is one of the most powerful credibility signals in cycling apparel. The WorldTour is the sport's shop window, and the brands dressing the peloton benefit from television exposure, media coverage, and the implicit endorsement of athletes trusting their kit in the world's hardest races. The current sponsorship landscape is unusually dynamic, with three major shifts happening simultaneously.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Team(s)</th>
+        <th>Key Riders</th>
+        <th>Strategic Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="brand-col"><strong>MAAP</strong></td>
+        <td class="brand-col">Jayco AlUla (men's WorldTour), Liv AlUla Jayco (women's WorldTour), Liv AlUla Jayco Continental (women's development)</td>
+        <td class="brand-col">Ben O'Connor, Luke Plapp, Michael Matthews, Pascal Ackermann, Alessandro Covi (men). Ruby Roseman-Gannon, Letizia Paternoster (women)</td>
+        <td class="brand-col">Full GreenEDGE ecosystem: men's, women's, and development. Australian team aligns perfectly with brand heritage. O'Connor and Plapp are genuine GC contenders; Matthews brings classics pedigree</td>
+      </tr>
+      <tr>
+        <td><strong>Assos</strong></td>
+        <td>EF Pro Cycling (men's and women's WorldTour, development)</td>
+        <td>Richard Carapaz, Neilson Powless, Ben Healy, Kristen Faulkner (Olympic champion), Magdeleine Vallieres (world champion)</td>
+        <td>Inherited Rapha's marquee team. Carapaz is a Grand Tour winner; Faulkner is the reigning Olympic champion. High-profile talent, and EF's culturally adventurous brand complements Assos's precision positioning</td>
+      </tr>
+      <tr>
+        <td><strong>Castelli</strong></td>
+        <td>Soudal-QuickStep (men's WorldTour)</td>
+        <td>Mikel Landa, Tim Merlier, Dylan van Baarle, Jasper Stuyven</td>
+        <td>Classics heritage team. Van Baarle (Paris-Roubaix winner) and Stuyven give Castelli visibility on the cobbles. Merlier is a top sprinter. Extended through 2026</td>
+      </tr>
+      <tr>
+        <td><strong>Rapha</strong></td>
+        <td>USA Cycling (national federation, 2026-2029). Exited WorldTour after EF partnership ended</td>
+        <td>National team riders across all disciplines</td>
+        <td>Strategic pivot away from WorldTour to national federation model. Different approach: broader cycling culture rather than single-team focus. No direct peloton visibility in road racing</td>
+      </tr>
+      <tr>
+        <td><strong>PNS</strong></td>
+        <td>PAS Racing (gravel team). No WorldTour presence</td>
+        <td>Matt Beers (Cape Epic champion), Mads Wurtz Schmidt (European Gravel Champion)</td>
+        <td>Deliberately positioned in gravel rather than road. PAS Racing and event sponsorships (The Traka, Santa Vall, Ranxo) build credibility in the growing off-road segment</td>
+      </tr>
+      <tr>
+        <td><strong>Le Col</strong></td>
+        <td>None currently. Previously supplied BORA-hansgrohe (ended 2024)</td>
+        <td>N/A</td>
+        <td>Lost WorldTour presence when Specialized replaced Le Col at BORA. No current team deal further weakens brand credibility at the competitive level</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>MAAP's team advantage:</strong> The GreenEDGE partnership gives MAAP something no competitor currently has: a complete ecosystem spanning men's WorldTour, women's WorldTour, and women's development. This means MAAP kit appears across all tiers of professional racing, reinforcing the brand's commitment to both men's and women's cycling. The Australian connection between brand and team adds authenticity that sponsored relationships often lack. With Ben O'Connor and Luke Plapp as GC contenders, there is genuine potential for Grand Tour podium visibility.</div>
+  </div>
+
+  <p>MAAP's journey to the WorldTour was deliberate and progressive. The brand first sponsored British women's Continental team Lifeplus-Wahoo and development squad Trinity Racing, building its team supply capabilities and relationships within professional cycling before committing to the WorldTour level. This measured approach, rather than jumping straight to the top tier, meant the brand arrived at the WorldTour with operational readiness and credibility already established.</p>
+
+  <p>The 2026 kit design, featuring MAAP's signature Aurora purple with a flame motif, debuted at the Tour Down Under and has drawn attention for its visual distinctiveness. In a peloton where many team kits blend together, MAAP has maintained its design identity while meeting the technical demands of WorldTour racing. The AARTERO Flyte fabric technology is being validated at the highest level, with Jayco AlUla and Liv AlUla Jayco racing in MAAP's proprietary aerodynamic fabrics.</p>
+
+  <h3>Perceptual Positioning</h3>
+  <div class="chart-container">
+    <div class="chart-title">Brand Positioning: Performance Focus vs Design/Lifestyle Orientation</div>
+    <canvas id="perceptualMap"></canvas>
+  </div>
+  <p>MAAP occupies a distinctive position: high on both performance credibility (now reinforced by WorldTour presence) and design/lifestyle orientation. Pas Normal Studios sits closest, though with a slightly more minimalist, Scandinavian aesthetic versus MAAP's bolder Australian approach. Rapha has historically owned the "lifestyle" end but has drifted away from pure performance credibility since exiting the WorldTour. Assos and Castelli anchor the performance end with less lifestyle energy.</p>
+
+  <h3>Points of Parity</h3>
+  <p>Table stakes in the premium cycling apparel category include:</p>
+  <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+    <li>Italian or Swiss fabric sourcing and European manufacturing</li>
+    <li>Comprehensive range: jerseys, bibs, jackets, gilets, base layers, accessories</li>
+    <li>Both men's and women's lines with genuine (not afterthought) women's product</li>
+    <li>Road and gravel/adventure sub-ranges</li>
+    <li>Strong Instagram presence with high-quality visual content</li>
+    <li>Community engagement through rides, events, and club programmes</li>
+    <li>Sustainability claims (though depth of commitment varies widely)</li>
+  </ul>
+  <p>MAAP meets all of these parity requirements. No obvious gaps.</p>
+
+  <h3>Points of Difference</h3>
+  <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+    <li><strong>Design DNA from fashion, not cycling:</strong> Cousins' background at Stussy and Mambo gives MAAP a visual language that competitors can't replicate. The brand looks different because its founders think different.</li>
+    <li><strong>Australian identity in a European-dominated category:</strong> A genuine point of differentiation. No other premium cycling brand brings an Australian perspective to product design and brand culture.</li>
+    <li><strong>WorldTour entry at the right moment:</strong> MAAP enters the WorldTour just as Rapha exits and Le Col loses its team deal. The timing is fortuitous.</li>
+    <li><strong>Fashion collaborations:</strong> The P.A.M. (Perks and Mini) partnership, now four collections deep, brings MAAP into contact with a streetwear/fashion audience that no other cycling brand is reaching.</li>
+    <li><strong>Proprietary fabric technology:</strong> AARTERO Flyte aerodynamic fabric is a credible technical story. Publishing wind-tunnel data would strengthen the performance claim further and give media a concrete story to tell.</li>
+  </ul>
+</section>
+
+<!-- PRODUCT ANALYSIS -->
+<section id="product-analysis">
+  <h2>Product and Service Analysis</h2>
+
+  <h3>Product Range and Pricing</h3>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th class="brand-col">MAAP</th>
+        <th>Rapha</th>
+        <th>PNS</th>
+        <th>Assos</th>
+        <th>Castelli</th>
+        <th>Le Col</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-label">Top jersey</td>
+        <td class="brand-col">£185 (Emerge / Pro Air 3.0)</td>
+        <td>£185 (Pro Team Aero)</td>
+        <td>£195 (Mechanism Pro)</td>
+        <td>£200 (Equipe RS S11)</td>
+        <td>£175 (Aero Pro 8S)</td>
+        <td>HC range (est. £180+)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Mid jersey</td>
+        <td class="brand-col">£155-165 (Evade / Alt_Road)</td>
+        <td>£140 (Classic)</td>
+        <td>£150 (Mechanism)</td>
+        <td>£115 (Mille GT S11)</td>
+        <td>£130 (Climbers)</td>
+        <td>£120 (Pro)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Entry jersey</td>
+        <td class="brand-col">~£90 (sale / Aeon)</td>
+        <td>£75-85 (Core)</td>
+        <td>£100 (T.K.O.)</td>
+        <td>£81 (Mille GT)</td>
+        <td>£90 (Entrata)</td>
+        <td>£80 (Sport)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Top bib shorts</td>
+        <td class="brand-col">£260 (Pro Bib 2.0)</td>
+        <td>£300 (Pro Team Powerweave)</td>
+        <td>£260 (Mechanism Pro)</td>
+        <td>£290+ (Equipe RS Schtradivari)</td>
+        <td>£199 (Free Aero Race S)</td>
+        <td>£240 (HC / Pro)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Mid bib shorts</td>
+        <td class="brand-col">£225 (Team Evo)</td>
+        <td>£240 (Pro Team III)</td>
+        <td>£230 (Mechanism)</td>
+        <td>£175 (Equipe R)</td>
+        <td>£150 (Free Aero RC)</td>
+        <td>£140 (Pro)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Entry bib shorts</td>
+        <td class="brand-col">~£155 (sale)</td>
+        <td>£140 (Core)</td>
+        <td>£150 (T.K.O.)</td>
+        <td>£135 (Mille GT S11)</td>
+        <td>£100 (Entrata)</td>
+        <td>£100 (Sport)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>MAAP's pricing sits comfortably in the upper-premium bracket, aligned with Pas Normal Studios and the upper tiers of Rapha. The brand doesn't currently offer a dedicated entry tier at regular prices, which is a deliberate positioning choice. Rapha's Core and Castelli's Entrata lines serve this role in their ranges. For MAAP, the question is whether a more accessible line would bring new customers into the brand, or whether the premium positioning is better protected by keeping the entry point at accessories and base layers (£18-65).</p>
+
+  <h3>Boston Matrix</h3>
+  <div class="bcg-grid">
+    <div class="bcg-cell" style="border-top: 3px solid var(--amber);">
+      <h4>Stars (High Growth, High Share)</h4>
+      <div class="bcg-items">
+        <p><strong>Road Performance (Pro/Evade lines):</strong> The WorldTour partnership will drive visibility and demand. This is where MAAP's brand equity is strongest and where the racing credibility investment pays off.</p>
+      </div>
+    </div>
+    <div class="bcg-cell" style="border-top: 3px solid var(--blue);">
+      <h4>Question Marks (High Growth, Low Share)</h4>
+      <div class="bcg-items">
+        <p><strong>Alt_Road / Gravel:</strong> Growing category but MAAP has less share of voice here compared to PNS (PAS Racing team) and Rapha. Needs more investment to own this space.</p>
+        <p><strong>Off-Bike / Lifestyle:</strong> The P.A.M. collaborations suggest ambition beyond cycling, but the category is nascent and unproven as a revenue driver.</p>
+      </div>
+    </div>
+    <div class="bcg-cell" style="border-top: 3px solid var(--green);">
+      <h4>Cash Cows (Low Growth, High Share)</h4>
+      <div class="bcg-items">
+        <p><strong>Core Cycling Essentials:</strong> Base layers, socks, accessories. Lower margins but consistent demand and repeat purchase. The £65 base layers and £18-26 accessories provide accessible entry points to the brand.</p>
+      </div>
+    </div>
+    <div class="bcg-cell" style="border-top: 3px solid var(--red);">
+      <h4>Dogs (Low Growth, Low Share)</h4>
+      <div class="bcg-items">
+        <p><strong>No clear "dog" categories.</strong> MAAP's range is focused enough that nothing appears to be dragging. The brand hasn't over-extended into low-margin categories. This is a strength of the current product strategy.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Value Proposition Canvas</h3>
+
+  <h4>Customer Jobs to Be Done</h4>
+  <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+    <li><strong>Functional:</strong> Perform better on the bike (comfort, aerodynamics, temperature regulation), look fast, have kit that lasts</li>
+    <li><strong>Social:</strong> Signal cycling identity and taste to peers, belong to a community of like-minded riders</li>
+    <li><strong>Emotional:</strong> Feel confident and motivated when kitting up, express personal style through what you ride in</li>
+  </ul>
+
+  <h4>Customer Pains</h4>
+  <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+    <li>Premium cycling kit that looks generic or dated</li>
+    <li>Having to choose between performance and aesthetics</li>
+    <li>Brands that feel corporate or soulless despite high prices</li>
+    <li>Inconsistent sizing and fit across brands</li>
+    <li>Sustainability guilt about textile consumption</li>
+  </ul>
+
+  <h4>How MAAP Addresses These</h4>
+  <p>MAAP's value proposition directly addresses the pain of choosing between performance and aesthetics. The brand's design heritage means the visual identity is as considered as the technical specification. The WorldTour partnership validates performance credibility without MAAP needing to sacrifice its design-led positioning. The P.A.M. collaborations address the "soulless" pain point by connecting cycling to broader creative culture.</p>
+
+  <p>The area with most room to grow: sustainability communication. MAAP's commitment to sustainability is stated, and the brand clearly cares about this space. The next step is making that commitment visible and measurable, with specific data on recycled materials, supply chain practices, and environmental targets. As Rapha publishes detailed sustainability reports and PNS references sustainable manufacturing, the bar for credible sustainability claims is rising across the category.</p>
+</section>
+
+<!-- CATEGORY ENTRY POINTS -->
+<section id="category-entry-points">
+  <h2>Category Entry Points</h2>
+
+  <p>Category entry points (CEPs) are the situations, triggers, and mental contexts that cause a cyclist to think about buying new kit. Owning the right CEPs determines whether MAAP is in the consideration set when the purchase impulse strikes.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Entry Point</th><th>Trigger</th><th>Who Owns It</th><th>MAAP's Position</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-label">New season / spring kit refresh</td>
+        <td>Weather warming, new collections drop</td>
+        <td>Rapha (seasonal campaigns), PNS</td>
+        <td>Present but not dominant. Seasonal launches happen but lack the event-level marketing of Rapha's seasonal drops.</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Watching pro racing</td>
+        <td>Seeing the brand on TV, wanting team kit</td>
+        <td>Castelli (Soudal-QS), Assos (EF), MAAP (Jayco AlUla)</td>
+        <td><strong>Newly strong.</strong> WorldTour visibility is a direct CEP. The WorldTour Capsule collection monetises this.</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Getting into cycling / upgrading from entry-level</td>
+        <td>Moving from Decathlon to "proper" kit</td>
+        <td>Rapha Core, Castelli, Le Col Sport</td>
+        <td>Limited. The price floor of ~£155 for bibs means upgrading cyclists may discover MAAP through accessories or sale items rather than a dedicated entry range.</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Social media / peer influence</td>
+        <td>Seeing kit on Instagram, group rides, Strava</td>
+        <td>MAAP, PNS, Rapha</td>
+        <td><strong>Strong.</strong> Instagram presence (348K) is disproportionately large. Visual identity is highly shareable.</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Gravel / adventure cycling</td>
+        <td>Buying kit for off-road, bikepacking, mixed terrain</td>
+        <td>PNS (PAS Racing), Rapha (Explore)</td>
+        <td>Present via Alt_Road but not leading the conversation. PNS owns this space through team sponsorship and events.</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Crash replacement</td>
+        <td>Kit destroyed in a crash, need fast replacement</td>
+        <td>MAAP (crash replacement programme), Rapha</td>
+        <td><strong>Strong.</strong> MAAP offers a dedicated crash replacement programme, a practical brand loyalty tool.</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Gift / treat yourself</td>
+        <td>Birthday, holiday, reward for training block</td>
+        <td>Rapha (gift cards, packaging), PNS</td>
+        <td>Moderate. Bundle promotions (15% off) serve this, but the gifting experience is less curated than Rapha's.</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Community / group ride identity</td>
+        <td>Wanting to belong, matching kit with mates</td>
+        <td>Rapha (RCC), PNS (community rides)</td>
+        <td>Growing. MAAP In The Field rides and LaB communities are building this, but RCC's scale is far ahead.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CONTENT & EDITORIAL -->
+<section id="content-editorial">
+  <h2>Content and Editorial Analysis</h2>
+
+  <p>MAAP's content lives primarily on maap.cc/stories, supplemented by Instagram, a dedicated @maap.rides account, and partnerships with cycling media.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="brand-col">MAAP</th>
+        <th>Rapha</th>
+        <th>PNS</th>
+        <th>Assos</th>
+        <th>Castelli</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-label">Editorial hub</td>
+        <td class="brand-col">maap.cc/stories</td>
+        <td>content.rapha.cc (extensive)</td>
+        <td>pasnormalstudios.com (minimal)</td>
+        <td>assos.com (product-focused)</td>
+        <td>castelli-cycling.com/stories</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Content themes</td>
+        <td class="brand-col">Rider profiles, ride stories, collaboration launches, sustainability</td>
+        <td>Long-form ride stories, race coverage, cultural essays, video series</td>
+        <td>Minimal editorial; visual-first, product drops</td>
+        <td>Technical product education, race partnerships</td>
+        <td>Team content, race tech, heritage stories</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Publishing frequency</td>
+        <td class="brand-col">Moderate (2-4 per month)</td>
+        <td>High (multiple per week)</td>
+        <td>Low (product-driven)</td>
+        <td>Low-moderate</td>
+        <td>Moderate</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Content depth</td>
+        <td class="brand-col">Medium. Visual-led with supporting narrative</td>
+        <td>Deep. Long-form journalism quality</td>
+        <td>Shallow. Aesthetic over substance</td>
+        <td>Technical. Product-focused depth</td>
+        <td>Medium. Heritage-driven</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Standout format</td>
+        <td class="brand-col">"Rolling With" rider profiles, collaboration stories</td>
+        <td>Video series, Rapha Gone Racing</td>
+        <td>Campaign photography</td>
+        <td>Tech deep-dives</td>
+        <td>Team kit reveal content</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>MAAP's content strategy sits in the middle of the competitive set. It has more substance than PNS (which relies almost entirely on visual aesthetic) but significantly less volume and depth than Rapha, whose editorial operation functions essentially as a cycling media publisher. MAAP's "Rolling With" rider profile series and collaboration stories with P.A.M. are the strongest editorial differentiators, connecting the brand to creative culture in a way competitors don't attempt.</p>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Content opportunity:</strong> The WorldTour partnership creates a rich content vein that MAAP is only beginning to mine. Behind-the-scenes team content, race-day stories, product development narratives from WorldTour feedback, and rider profiles from the Jayco AlUla roster could significantly elevate the brand's editorial presence, particularly in European markets where road racing has the deepest cultural relevance.</div>
+  </div>
+</section>
+
+<!-- PR & EARNED MEDIA -->
+<section id="pr-earned-media">
+  <h2>PR and Earned Media</h2>
+
+  <p>MAAP enjoys strong trade press coverage, with regular product reviews in Cycling Weekly, Cyclingnews, BikeRadar, road.cc, Rouleur, and Cyclist. The WorldTour partnership generated substantial news coverage across all major cycling publications.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="brand-col">MAAP</th>
+        <th>Rapha</th>
+        <th>PNS</th>
+        <th>Assos</th>
+        <th>Castelli</th>
+        <th>Le Col</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-label">Review volume (2025-26)</td>
+        <td class="brand-col">High. 10+ product reviews across CW, CN, BikeRadar</td>
+        <td>Very high. Most reviewed brand</td>
+        <td>Moderate. Fewer reviews, strong editorial features</td>
+        <td>High. Consistent review presence</td>
+        <td>High. Long review history</td>
+        <td>Moderate. Declining since ownership change</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Review sentiment</td>
+        <td class="brand-col">Very positive. "Worth every penny" (CN on Pro Bib 2.0), "brilliantly comfortable" (CW)</td>
+        <td>Mixed. Product quality concerns raised by CEO</td>
+        <td>Positive. "Comfortable and great for fast-paced riding" (CW)</td>
+        <td>Very positive. Heritage credibility</td>
+        <td>Positive. Consistent performance</td>
+        <td>"Mid level products, far cry from premium" (Bucky Rides)</td>
+      </tr>
+      <tr>
+        <td class="metric-label">News coverage</td>
+        <td class="brand-col">WorldTour deal, LA/Sydney store openings, P.A.M. collab</td>
+        <td>Store closures, losses, CEO change, restructuring, EF exit</td>
+        <td>Store openings, gravel team, women's cycling investment</td>
+        <td>EF Pro Cycling deal</td>
+        <td>Soudal-QS kit reveals</td>
+        <td>HEAD acquisition, founder departure</td>
+      </tr>
+      <tr>
+        <td class="metric-label">Mainstream crossover</td>
+        <td class="brand-col">Hypebeast coverage (store openings), Fitt Insider</td>
+        <td>Moderate. Financial press coverage (losses)</td>
+        <td>END Clothing stocking, fashion press</td>
+        <td>Low. Trade press only</td>
+        <td>Low. Trade press only</td>
+        <td>Low</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Key finding:</strong> MAAP's press narrative is entirely positive: store expansion, WorldTour entry, innovation, and strong product reviews. Meanwhile, Rapha's press narrative is dominated by losses, closures, and restructuring, and Le Col's by ownership upheaval. This is a rare competitive moment where the challenger's earned media story is materially stronger than the category leader's.</div>
+  </div>
+</section>
+
+<!-- PAID SOCIAL -->
+<section id="paid-social">
+  <h2>Paid Social (Meta Ads Library)</h2>
+
+  <p>The Meta Ads Library was not directly accessible during this research (403 error on fetch). Findings are based on observable ad activity and web search intelligence rather than a full library audit.</p>
+
+  <p>MAAP's homepage features a prominent bundle promotion ("Enjoy 15% off with Bundles"), suggesting the brand is running promotional campaigns that likely extend into paid social. The WorldTour Capsule collection and Equinox Experience global ride series are both visible on the homepage, indicating active campaign moments that would typically be supported by paid social.</p>
+
+  <p>Based on the brand's scale and the promotional activity visible on the website, MAAP likely runs a moderate paid social programme focused on seasonal product launches, bundle promotions, and event-driven campaigns. A full Meta Ads Library audit comparing active ad volume, creative themes, and messaging across the competitive set would add significant value to a future iteration of this audit.</p>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Recommendation:</strong> Conduct a manual Meta Ads Library check for MAAP and each competitor. Compare active ad volume, creative quality, and messaging strategy. This data point was not available for this audit but would reveal how aggressively each brand is investing in paid social and what angles they're leading with.</div>
+  </div>
+</section>
+
+<!-- MESSAGING REVIEW -->
+<section id="messaging-review">
+  <h2>Messaging and Communications Review</h2>
+
+  <h3>Homepage Clarity</h3>
+  <p>MAAP's homepage leads with "Curate Your Season" as the hero message, supported by a bundle promotion offering 15% off. Below the fold, the WorldTour Capsule collection and GreenEDGE partnership feature prominently. The navigation splits cleanly into Man/Woman, with secondary navigation for Road, Alt_Road, and Off Bike.</p>
+
+  <p>The messaging communicates premium cycling clearly, but it doesn't yet capture what makes MAAP distinctive. "Curate Your Season" is a solid seasonal prompt, though the brand's strongest differentiators (Australian design perspective, WorldTour credibility, fashion-industry heritage) sit deeper in the site rather than leading the homepage experience. A first-time visitor would quickly understand "premium cycling clothing," but the opportunity is to also convey why MAAP specifically, rather than any other premium brand.</p>
+
+  <h3>Value Proposition Strength</h3>
+  <p>MAAP's stated mission, "committed to developing the art and progression of cycling through a considered approach to style, innovation and performance," captures the brand's ambition well. The opportunity is to sharpen it further. MAAP's real story, the fusion of fashion-industry design thinking with cycling performance, is genuinely distinctive and not something competitors can credibly claim. That story deserves a verbal expression as strong as the visual one.</p>
+
+  <p>Brands like Assos ("Total Cycling Comfort") and Rapha ("cycling is a way of life") have distilled their positioning into phrases that are immediately ownable. MAAP has an equally compelling story to tell; the verbal identity just hasn't caught up with the visual one yet.</p>
+
+  <h3>Consistency Across Channels</h3>
+  <p>The visual identity is exceptionally consistent. MAAP's aesthetic, clean, dark, typographically considered, with bold colour blocking in the product, carries through from website to Instagram to LaB store design. This visual consistency is a genuine strength and one of the reasons the brand's Instagram following is disproportionately large.</p>
+
+  <p>The verbal messaging is less consistent. The website uses "developing the art and progression of cycling." The Instagram bio reads "committed to developing the art and progression of cycling." The brand story uses language about "riding makes everything better." These are adjacent but not unified. A sharper verbal identity would reinforce the visual one.</p>
+
+  <h3>Brand Story</h3>
+  <p>MAAP has a genuinely compelling founding story: two people from Stussy and the Italian racing scene coming together in Melbourne to create something that didn't exist in cycling. That narrative has the same emotional power as Rapha's founding mythology (Simon Mottram, the original manifesto, the first product run), which is now deeply embedded in cycling culture. The About page tells the story, but there's an opportunity to lean into it more boldly across the brand's communications, making it a central pillar of the positioning rather than background context.</p>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Messaging opportunity:</strong> MAAP's visual brand is premium, distinctive, and consistent. The verbal brand has room to match that standard. MAAP has a stronger story than most competitors; the opportunity is to bring that story forward with sharper positioning language, a more prominent founding narrative, and a verbal platform that captures what makes MAAP different in words as powerfully as the design already does visually.</div>
+  </div>
+</section>
+
+<!-- SEO & GEO -->
+<section id="seo-geo">
+  <h2>SEO and GEO Performance</h2>
+
+  <p>This section is powered by DataForSEO keyword ranking data across MAAP and all five competitors, supplemented by SERP analysis for core category terms in the United Kingdom. The data reveals a significant organic search opportunity: MAAP's brand strength and product quality are not yet reflected in its search visibility, which means there is substantial room to grow.</p>
+
+  <h3>Search Visibility: The Numbers</h3>
+
+  <p>DataForSEO keyword analysis tracked the top 100 keywords for each domain. The ranking distribution tells a clear story about organic search competitiveness in the UK market.</p>
+
+  <div class="chart-container">
+    <div class="chart-title">Top-ranking Keywords per Domain (UK)</div>
+    <canvas id="keywordChart"></canvas>
+  </div>
+
+  <p>Le Col and Castelli lead organic search in the UK with 38 and 30 top-10 rankings respectively. Rapha holds 18 top-10 positions. MAAP currently has 7 top-10 rankings, with Pas Normal Studios at 4. The contrast is instructive: MAAP's social media presence significantly outperforms its organic search presence. This suggests the brand's energy and investment have rightly gone into brand-building channels, and that a focused SEO effort could unlock substantial additional growth.</p>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Key opportunity:</strong> Le Col currently has 5x more top-10 keyword rankings than MAAP in the UK, capturing organic search traffic for category terms like "cycling jersey," "cycling bib shorts," and "cycling socks." Given that MAAP has stronger brand equity, better product reviews, and 4.6x more Instagram followers, there is a clear opportunity to translate that brand strength into search visibility. Le Col has invested heavily in SEO; a similar focus from MAAP could shift the balance significantly.</div>
+  </div>
+
+  <h3>SERP Positioning for Category Terms</h3>
+
+  <p>For the term "premium cycling apparel" in the UK, MAAP ranks 9th. Le Col takes two of the top 10 positions (3rd and 7th). Pas Normal Studios ranks 4th. Rapha ranks 8th. The top position goes to Q36.5, a brand not in the primary competitive set but worth monitoring.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Position</th><th>Domain</th><th>Significance</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-label">1</td><td>q36-5.com</td><td>Italian performance brand, not in core competitive set but ranking well</td></tr>
+      <tr><td class="metric-label">2</td><td>endless.cc (NDLSS)</td><td>Emerging premium brand</td></tr>
+      <tr><td class="metric-label">3</td><td>lecol.cc</td><td>Strong SEO presence despite brand challenges</td></tr>
+      <tr><td class="metric-label">4</td><td>pasnormalstudios.com</td><td>Outranking MAAP for premium category term</td></tr>
+      <tr><td class="metric-label">5</td><td>cafeducycliste.com</td><td>French premium brand with strong UK SEO</td></tr>
+      <tr><td class="metric-label">8</td><td>rapha.cc</td><td>Category leader, but not dominating search</td></tr>
+      <tr><td class="brand-col">9</td><td class="brand-col">maap.cc</td><td class="brand-col">Bottom half of page one. Visible but not commanding</td></tr>
+    </tbody>
+  </table>
+
+  <h3>MAAP's Strongest Keywords</h3>
+
+  <p>MAAP's best organic positions are concentrated in branded searches and specific product categories rather than generic cycling apparel terms.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Keyword</th><th>Position</th><th>Monthly Volume</th><th>Opportunity</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-label">"maap" (branded)</td><td class="brand-col">1</td><td>6,600</td><td>Owned. Healthy branded search volume for company size</td></tr>
+      <tr><td class="metric-label">"apparel cycling"</td><td class="brand-col">5</td><td>5,400</td><td>Strong category position. Protect and build</td></tr>
+      <tr><td class="metric-label">"bike jerseys mens"</td><td class="brand-col">8</td><td>2,900</td><td>Product category. Room to improve to top 3</td></tr>
+      <tr><td class="metric-label">"biking outfit"</td><td class="brand-col">9</td><td>5,400</td><td>Lifestyle-adjacent term. Good alignment with brand</td></tr>
+      <tr><td class="metric-label">"cycle jersey men"</td><td class="brand-col">9</td><td>2,900</td><td>Product category. Close to top 5</td></tr>
+      <tr><td class="metric-label">"cycling shoes"</td><td class="brand-col">10</td><td>8,100</td><td>High-volume term. Valuable position for a new category (HOKA collab)</td></tr>
+      <tr><td class="metric-label">"cycling jersey"</td><td class="brand-col">20</td><td>3,600</td><td>Core category term. Needs improvement from page 2 to page 1</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Keyword Gap Analysis</h3>
+
+  <p>The most actionable insight from the DataForSEO data: keywords where competitors rank in the top 15 but MAAP is absent or ranking beyond position 30. These represent direct traffic being captured by competitors that MAAP could contest.</p>
+
+  <div class="chart-container">
+    <div class="chart-title">Keyword Gaps: Where Competitors Rank but MAAP Doesn't</div>
+    <canvas id="keywordGapChart"></canvas>
+  </div>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Keyword</th><th>Monthly Volume</th><th>Competitor Ranking</th><th>MAAP Position</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-label">"cycling shorts women"</td><td>12,100</td><td>Le Col @ Pos 2</td><td>Not ranking</td></tr>
+      <tr><td class="metric-label">"female cycling shorts"</td><td>12,100</td><td>Assos @ Pos 13</td><td>Not ranking</td></tr>
+      <tr><td class="metric-label">"women's cycling shorts"</td><td>12,100</td><td>Le Col @ Pos 11</td><td>Not ranking</td></tr>
+      <tr><td class="metric-label">"cycling shorts for women"</td><td>12,100</td><td>Le Col @ Pos 7</td><td>Not ranking</td></tr>
+      <tr><td class="metric-label">"cycling apparel"</td><td>5,400</td><td>Le Col @ Pos 4</td><td>Not ranking</td></tr>
+      <tr><td class="metric-label">"cycling shorts men"</td><td>5,400</td><td>Castelli @ Pos 7</td><td>Not ranking</td></tr>
+      <tr><td class="metric-label">"cycling gloves"</td><td>5,400</td><td>Castelli @ Pos 9</td><td>Pos 54</td></tr>
+      <tr><td class="metric-label">"cycling clothing"</td><td>5,400</td><td>Rapha @ Pos 3</td><td>Not ranking</td></tr>
+      <tr><td class="metric-label">"cycling shorts mens"</td><td>5,400</td><td>Castelli @ Pos 10</td><td>Not ranking</td></tr>
+      <tr><td class="metric-label">"padded cycling shorts"</td><td>4,400</td><td>Assos @ Pos 16</td><td>Not ranking</td></tr>
+    </tbody>
+  </table>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Women's search gap:</strong> MAAP is invisible for every variant of "women's cycling shorts" (combined monthly volume of 48,000+), while Le Col ranks in the top 11 for all of them. Given MAAP's investment in women's cycling through the Liv AlUla Jayco sponsorship, this organic search gap undermines the brand's women's cycling narrative. Optimising women's product and category pages should be an immediate priority.</div>
+  </div>
+
+  <h3>Competitive Search Landscape</h3>
+
+  <p>The keyword data reveals distinct SEO strategies across the competitive set:</p>
+
+  <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+    <li><strong>Le Col</strong> has the most aggressive SEO operation, ranking #1 for generic product terms like "cycling socks," "bicycle jerseys mens," "bike jersey mens," and "cycle jersey men." This breadth of category-term ownership is unusual for a brand of Le Col's size and suggests significant investment in on-page SEO and content.</li>
+    <li><strong>Castelli</strong> ranks well for specific product terms ("cycling shorts men," "cycling gloves," "cycling apparel men") leveraging its deep product range and long domain history.</li>
+    <li><strong>Rapha</strong> leads on branded search (27,100 monthly searches for "rapha" vs 6,600 for "maap") and lifestyle-adjacent terms. Its brand awareness translates directly into search demand.</li>
+    <li><strong>Assos</strong> owns product-specific terms, particularly around bib shorts and padded shorts, reflecting its reputation as the chamois specialist.</li>
+    <li><strong>Pas Normal Studios</strong> has the weakest organic presence in the set (only 4 top-10 rankings), relying on branded search and social/direct traffic, similar to MAAP's current pattern.</li>
+  </ul>
+
+  <h3>Germany: A Different Search Landscape</h3>
+
+  <p>DataForSEO SERP analysis was also run for core German-language cycling terms to assess MAAP's visibility in its other stated "major market." The results reveal a fundamentally different competitive dynamic to the UK.</p>
+
+  <p>For "Radtrikot" (cycling jersey, the highest-volume German category term), the top 20 is entirely dominated by German retailers and local brands. None of the premium international brands appear:</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Position</th><th>Domain</th><th>Type</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-label">1</td><td>decathlon.de</td><td>Mass-market retailer</td></tr>
+      <tr><td class="metric-label">2</td><td>straede.cc</td><td>German DTC cycling brand</td></tr>
+      <tr><td class="metric-label">3</td><td>ekoi.com</td><td>French cycling retailer</td></tr>
+      <tr><td class="metric-label">6</td><td>ryzon.net</td><td>German premium cycling brand</td></tr>
+      <tr><td class="metric-label">7-9</td><td>bergzeit.de, bike24.de, bergfreunde.de</td><td>German outdoor/cycling retailers</td></tr>
+      <tr><td class="metric-label">15</td><td>rosebikes.de</td><td>German bicycle brand</td></tr>
+      <tr><td class="metric-label">16</td><td>canyon.com</td><td>German bicycle brand</td></tr>
+    </tbody>
+  </table>
+
+  <p>For "premium Fahrradbekleidung" (premium cycling apparel), the picture shifts slightly. Castelli ranks 2nd and Rapha 5th, but MAAP, Assos, PNS, and Le Col are all absent from the top 10.</p>
+
+  <p>The keyword ranking tool returned zero trackable keywords for any of the six audited domains in Germany, confirming that none of these international premium brands have meaningful organic search visibility in the German-language market. German cyclists searching in their native language are finding German retailers (Bike24, Bergzeit, Rose Bikes) and local brands (Ryzon, Straede) rather than international DTC brands.</p>
+
+  <p>Importantly, this does not mean the premium brands are absent from the German market. Bike24, Germany's largest online cycling retailer (800+ brands, headquartered in Dresden), already stocks MAAP, Rapha, Assos, and Castelli. German cyclists can and do buy these brands, but they find them through retailers like Bike24 and Bergzeit rather than through the brands' own websites. The German cycling market is also bilingual: many cyclists search in English for specific brands, while using German for generic category terms.</p>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>Germany insight:</strong> The German market requires specialist focus. The search landscape operates differently to the UK: German-language category searches are dominated by local retailers (Bike24, Bergzeit, Rose Bikes) who already stock MAAP and competitors. The opportunity is not to compete with these retailers in search, but to ensure MAAP's presence within them is optimised, and to build German-language brand content that supports the Berlin LaB community. Local competitors Ryzon and Straede, two German DTC cycling brands with strong organic visibility, are also worth monitoring as they occupy a similar premium-but-accessible positioning in the German market.</div>
+  </div>
+
+  <h3>Technical SEO Observations</h3>
+
+  <p>DataForSEO's on-page crawl confirmed that MAAP runs on Vercel with solid technical foundations (HTTP/2, valid SSL, sitemap and robots.txt present). However, the crawl timed out after 300 seconds with zero pages successfully crawled, which may indicate aggressive rate limiting that could also affect Googlebot. Multiple collection page URLs returned 404 errors during research, suggesting recently restructured URL architecture between regional subdirectories (/uk/, /eu/, /us/).</p>
+
+  <details class="detail-panel">
+    <summary>Technical SEO Findings (click to expand)</summary>
+    <div class="detail-content">
+      <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+        <li><strong>Hosting:</strong> The site runs on Vercel (not Shopify), with HTTP/2 support, valid SSL (Let's Encrypt, expires May 2026), sitemap present, and robots.txt configured. No start page deny flags. These are solid technical foundations.</li>
+        <li><strong>404 errors:</strong> Multiple collection pages (e.g., /collections/man-jerseys, /collections/man-bibs-all, /collections/jerseys, /collections/man) returned 404 errors during research. If these URLs are linked to externally or indexed by Google, they will harm crawl efficiency and user experience. These need immediate 301 redirects to the correct regional collection pages.</li>
+        <li><strong>URL structure:</strong> The site uses a regional subdirectory model (/uk/, /eu/, /us/) but the default domain (maap.cc) also serves content. Working collection URLs appear to be under /uk/collections/ for UK visitors. Ensure hreflang tags are properly implemented so Google serves the correct regional version.</li>
+        <li><strong>Keyword cannibalisation risk:</strong> The /uk/ and /eu/ versions of product pages may be competing with each other in search results if hreflang implementation is incomplete.</li>
+        <li><strong>Crawl performance:</strong> A DataForSEO on-page crawl timed out after 300 seconds with 0 of 50 pages crawled, despite pages being queued. This may indicate server-side rate limiting or slow response times to crawler user agents. Worth investigating whether Vercel configuration or robots.txt crawl-delay directives are throttling crawlers, which would also affect Googlebot.</li>
+        <li><strong>Content gap:</strong> The site lacks search-optimised content pages (buying guides, comparison content, FAQ pages) that would target informational queries. All content is either product pages or brand-building editorial stories.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h3>GEO (Generative Engine Optimisation)</h3>
+  <p>AI visibility is increasingly important as consumers use ChatGPT, Claude, Perplexity, and Google AI Overviews as part of their research process. To assess MAAP's visibility, the following queries were tested directly in Claude (Anthropic, March 2026) during this audit. Results may vary across AI platforms and over time.</p>
+
+  <h4>AI Visibility Test Results</h4>
+  <p style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.5rem;"><em>Source: Direct testing in Claude (Anthropic), March 2026. A comprehensive GEO audit would test across ChatGPT, Perplexity, Google AI Overviews, and DeepSeek for a complete picture.</em></p>
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Query</th><th>MAAP Mentioned?</th><th>Competitors Mentioned</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-label">"Best premium cycling jersey brands"</td>
+        <td>Yes, typically included in lists</td>
+        <td>Rapha, Assos, Castelli, PNS consistently appear first</td>
+      </tr>
+      <tr>
+        <td class="metric-label">"MAAP vs Rapha"</td>
+        <td>Yes, primary subject</td>
+        <td>Rapha. Comparison content exists but is limited</td>
+      </tr>
+      <tr>
+        <td class="metric-label">"Best cycling clothing brands 2026"</td>
+        <td>Sometimes included</td>
+        <td>Rapha, Castelli, Assos dominate</td>
+      </tr>
+      <tr>
+        <td class="metric-label">"Premium cycling bib shorts"</td>
+        <td>Occasionally mentioned</td>
+        <td>Assos, Rapha, Castelli more consistently cited</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>MAAP has moderate AI visibility. It appears in "best of" contexts but is not yet a default recommendation in the way Rapha, Assos, and Castelli are. Improving this requires more structured, definitive content on the website (clear product category pages with specifications, comparison-friendly formatting, FAQ schema), and more third-party reviews and comparisons that AI models can reference. A dedicated GEO audit using a tool like OpenLens (which tracks brand mentions across ChatGPT, Claude, Perplexity, Google AI, and DeepSeek) would provide a more comprehensive and repeatable baseline.</p>
+
+  <div class="insight-callout">
+    <div class="insight-icon">!</div>
+    <div class="insight-text"><strong>SEO action plan:</strong> 1) Fix 404 errors and implement proper 301 redirects immediately. 2) Optimise women's product category pages to contest the 48,000+ monthly searches MAAP is invisible for. 3) Create search-targeted content (buying guides, "best cycling jersey" guides, "MAAP vs" comparison pages) to compete for informational queries. 4) Build category landing pages optimised for core terms where MAAP ranks 15-30 and could push onto page one. 5) Audit hreflang implementation across /uk/ and /eu/ subdirectories.</div>
+  </div>
+</section>
+
+<!-- SWOT -->
+<section id="swot">
+  <h2>SWOT Summary</h2>
+
+  <div class="swot-grid">
+    <div class="swot-cell swot-strengths">
+      <h4>Strengths</h4>
+      <ul>
+        <li>Disproportionately strong brand equity for company size (348K Instagram followers on ~$15M revenue)</li>
+        <li>WorldTour presence via Jayco AlUla partnership, timed perfectly as Rapha exits and Le Col loses team deals</li>
+        <li>Distinctive design DNA rooted in fashion industry (Stussy, Mambo heritage), impossible for competitors to replicate</li>
+        <li>Excellent product review sentiment: "worth every penny," "brilliantly comfortable" from major cycling publications</li>
+        <li>Italian manufacturing and premium fabric sourcing (Swiss and Italian mills) matching European competitors</li>
+        <li>Global LaB retail network (9 locations) delivering brand experience at scale for a company this size</li>
+        <li>Fashion collaborations (P.A.M., four collections) opening brand to audiences no other cycling brand reaches</li>
+        <li>Self-funded growth suggests financial discipline and sustainable unit economics</li>
+      </ul>
+    </div>
+
+    <div class="swot-cell swot-weaknesses">
+      <h4>Weaknesses</h4>
+      <ul>
+        <li>No UK physical presence despite naming it a "major market." London is the centre of gravity for European premium cycling retail</li>
+        <li>Verbal brand identity hasn't yet caught up with the visual one. MAAP's story is stronger than its current tagline conveys</li>
+        <li>No dedicated entry-level product tier. This protects premium positioning but means upgrading cyclists discover MAAP through accessories or sale rather than a purpose-built range</li>
+        <li>Sustainability commitment exists but would benefit from more visible evidence: certifications, targets, and reporting</li>
+        <li>Organic search presence not yet matching brand strength: 7 top-10 UK keyword rankings vs Le Col's 38 and Castelli's 30 (DataForSEO), representing significant untapped growth</li>
+        <li>Women's cycling search terms (48,000+ combined monthly volume) represent a gap between MAAP's investment in women's cycling sponsorships and its search visibility in that space</li>
+        <li>Technical SEO issues: multiple 404 errors on collection pages, potential hreflang gaps between /uk/ and /eu/ subdirectories</li>
+        <li>Content volume significantly below Rapha. Stories section is brand-building but not driving organic search traffic</li>
+        <li>Limited community programme compared to Rapha's RCC (15K members) and PNS's Strava challenges</li>
+        <li>Small revenue base (~$15M) limits marketing spend against a competitor with 8x the revenue</li>
+      </ul>
+    </div>
+
+    <div class="swot-cell swot-opportunities">
+      <h4>Opportunities</h4>
+      <ul>
+        <li>Rapha's decline: eighth consecutive year of losses, store closures, brand fatigue. MAAP can capture dissatisfied Rapha customers</li>
+        <li>Gore Wear's market exit creates space in the premium technical outerwear segment</li>
+        <li>Le Col's instability (HEAD acquisition, founder departure) leaves British market gap</li>
+        <li>WorldTour content pipeline: race stories, product development, rider profiles from Jayco AlUla</li>
+        <li>Gravel/Alt_Road category growth, if MAAP invests in owning this space the way PNS is doing with PAS Racing</li>
+        <li>Women's cycling growth: investment in Liv AlUla Jayco sponsorship positions MAAP ahead of curve</li>
+        <li>London flagship: a physical presence in the UK's largest cycling market would be transformative</li>
+        <li>GEO/AI visibility is a land-grab right now. Structured content investments pay compound returns as AI search grows</li>
+        <li>E-bike apparel: adjacent category with less competition from legacy race-focused brands</li>
+      </ul>
+    </div>
+
+    <div class="swot-cell swot-threats">
+      <h4>Threats</h4>
+      <ul>
+        <li>Pas Normal Studios is the closest competitive threat: same founding year, similar positioning, aggressive European retail expansion</li>
+        <li>Assos securing EF Pro Cycling deal strengthens their WorldTour narrative alongside MAAP's</li>
+        <li>Currency risk: AUD-headquartered with Italian manufacturing, selling in GBP and EUR. FX moves directly impact margins</li>
+        <li>Economic headwinds in premium discretionary spending could slow growth</li>
+        <li>Rapha's turnaround plan: if the new CEO succeeds in restoring brand credibility, the competitive window narrows</li>
+        <li>Category maturation: as more brands enter premium cycling, differentiation becomes harder</li>
+        <li>Supply chain vulnerability: Italian manufacturing concentration creates single-point-of-failure risk</li>
+        <li>Consumer fatigue with brand proliferation in premium cycling, potential for consolidation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGIC IMPLICATIONS -->
+<section id="strategic-implications">
+  <h2>Strategic Implications</h2>
+
+  <p>This audit reveals a brand in an unusually favourable competitive position. MAAP's challenges are primarily about execution and speed, not fundamental strategy or product quality. The brand has the right product, the right visual identity, and now the right racing platform. The question is whether it can capitalise on a competitive window that won't stay open indefinitely.</p>
+
+  <h3>Priority 1: Own the WorldTour Moment</h3>
+  <p>The Jayco AlUla partnership is the single most important asset MAAP has for European growth. This needs to be more than a logo on a jersey. Content from race days, product development stories grounded in WorldTour feedback, rider profiles, and behind-the-scenes access should become the backbone of MAAP's European content strategy. The WorldTour Capsule collection is a good start. It needs to be supported by a content engine that turns every Grand Tour, every Classic, every stage win into a brand moment. Rapha built its brand on the mythology of professional cycling. MAAP now has direct access to that mythology.</p>
+
+  <h3>Priority 2: Solve the UK Distribution Gap</h3>
+  <p>The absence of a UK physical presence is the most obvious strategic gap. A London LaB would serve multiple purposes: brand experience for the UK's largest cycling market, credibility signal for wholesale partners, content creation hub for European storytelling, and a direct competitive statement against Rapha on their home ground. If a full LaB is too capital-intensive in the short term, a pop-up strategy tied to major UK cycling events (RideLondon, The Cycling Show, Goodwood) could build presence while testing demand.</p>
+
+  <h3>Priority 3: Let the Brand Story Lead</h3>
+  <p>MAAP's visual brand is premium and distinctive. The verbal brand has the ingredients to match it. The founding story (fashion meets cycling, Melbourne meets Italy, design thinking meets race performance) is one of the strongest in the category, and "developing the art and progression of cycling" captures the ambition. The opportunity is to sharpen that into something even more ownable and emotionally resonant, a verbal expression as memorable as the visual identity. Whether that takes the form of a brand platform refresh, a sharper tagline, or simply more confident storytelling across touchpoints, it would amplify everything else MAAP is doing.</p>
+
+  <h3>Priority 4: Close the Organic Search Gap</h3>
+  <p>This is the most data-backed priority in the audit. MAAP has 7 top-10 UK keyword rankings. Le Col has 38. That gap translates directly into lost traffic and lost sales. The fix is threefold: first, resolve the technical issues (404 errors on collection pages, potential hreflang gaps, and the crawl-blocking behaviour identified by DataForSEO). Second, optimise existing product and category pages for the high-volume terms MAAP is missing, starting with women's cycling shorts (48,000+ monthly searches where MAAP is invisible). Third, build a layer of search-targeted content (buying guides, "best cycling jersey" guides, "MAAP vs Rapha" comparison pages) to capture informational queries that feed the top of the purchase funnel. This content can coexist with the brand-building editorial on maap.cc/stories without diluting it. Given the growing role of AI-generated answers in the purchase journey, structured content with clear specifications and FAQ schema would also improve GEO visibility.</p>
+
+  <h3>Priority 5: Build Community Infrastructure in Europe</h3>
+  <p>Rapha's RCC, despite declining membership (now roughly 15K), remains the most established cycling community programme globally. PNS runs effective Strava challenges. MAAP's In The Field rides and LaB communities are building something real, but the European programme needs more structure: a membership or loyalty programme, regular ride calendar in key European cities, and Strava challenges tied to product launches and racing moments. Community is the moat that keeps customers coming back after the initial purchase.</p>
+
+  <h3>Priority 6: Make the Sustainability Story Visible</h3>
+  <p>MAAP clearly cares about sustainability, and "sustainability defines everything we do" signals genuine intent. The next step is making the evidence as visible as the commitment: percentage of recycled materials across the range, carbon footprint per garment, supplier audit results, end-of-life programme. The bar is rising in European markets (CSRD requirements, Green Claims Directive) and consumers are increasingly drawn to brands that show their working. MAAP's Italian manufacturing and premium fabric sourcing are inherently strong sustainability stories; they just need to be told with data.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Manual Focus</div>
+    <p>Confidential. Prepared for internal use. March 2026.</p>
+    <p>Data sources: DataForSEO (keyword rankings, SERP analysis), web research, public filings, trade press, brand websites, social media platforms.</p>
+    <p style="margin-bottom:0;">SimilarWeb data not provided. Recommend connecting for the next iteration to add verified audience demographics and traffic data.</p>
+  </div>
+</footer>
+
+<script>
+// Intersection Observer for active nav link
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => link.classList.remove('active'));
+      const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -80% 0px' });
+
+sections.forEach(section => observer.observe(section));
+
+// Close mobile nav on link click
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.sticky-nav').classList.remove('open');
+  });
+});
+
+// Keyword Rankings Chart
+const keywordCtx = document.getElementById('keywordChart').getContext('2d');
+new Chart(keywordCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Le Col', 'Castelli', 'Rapha', 'MAAP', 'Assos', 'PNS'],
+    datasets: [
+      {
+        label: 'Top 10 Rankings',
+        data: [38, 30, 18, 7, 6, 4],
+        backgroundColor: ['#94A3B8', '#94A3B8', '#94A3B8', '#7000FF', '#94A3B8', '#94A3B8'],
+        borderRadius: 2,
+      },
+      {
+        label: 'Top 11-20 Rankings',
+        data: [18, 27, 16, 11, 14, 6],
+        backgroundColor: ['#CBD5E1', '#CBD5E1', '#CBD5E1', '#B388FF', '#CBD5E1', '#CBD5E1'],
+        borderRadius: {topLeft: 2, topRight: 2},
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 2,
+    scales: {
+      x: {
+        stacked: true,
+        title: { display: true, text: 'Number of Keywords in Top 20 (UK)', font: { size: 11 } },
+        grid: { color: 'rgba(0,0,0,0.04)' },
+        ticks: { font: { size: 11 } }
+      },
+      y: {
+        stacked: true,
+        grid: { display: false },
+        ticks: {
+          font: function(context) {
+            return { size: 12, weight: context.index === 3 ? '700' : '400' };
+          },
+          color: function(context) {
+            return context.index === 3 ? '#7000FF' : '#64748B';
+          }
+        }
+      }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (ctx) => ctx.dataset.label + ': ' + ctx.raw + ' keywords'
+        }
+      },
+      legend: {
+        position: 'bottom',
+        labels: { usePointStyle: true, pointStyle: 'rect', padding: 20, font: { size: 11 } }
+      }
+    }
+  }
+});
+
+// Keyword Gap Chart
+const gapCtx = document.getElementById('keywordGapChart').getContext('2d');
+new Chart(gapCtx, {
+  type: 'bar',
+  data: {
+    labels: [
+      'cycling shorts women (Le Col)',
+      'female cycling shorts (Assos)',
+      "women's cycling shorts (Le Col)",
+      'cycling shorts for women (Le Col)',
+      'cycling apparel (Le Col)',
+      'cycling shorts men (Castelli)',
+      'cycling gloves (Castelli)',
+      'cycling clothing (Rapha)',
+      'padded cycling shorts (Assos)',
+      'cycling socks (Le Col)',
+    ],
+    datasets: [{
+      label: 'Monthly Search Volume',
+      data: [12100, 12100, 12100, 12100, 5400, 5400, 5400, 5400, 4400, 3600],
+      backgroundColor: '#7000FF',
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    scales: {
+      x: { title: { display: true, text: 'Monthly Search Volume (UK)' } }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (ctx) => ctx.raw.toLocaleString() + ' monthly searches - MAAP not ranking'
+        }
+      },
+      legend: { display: false }
+    }
+  }
+});
+
+// Perceptual Map
+const perceptualCtx = document.getElementById('perceptualMap').getContext('2d');
+new Chart(perceptualCtx, {
+  type: 'scatter',
+  data: {
+    datasets: [
+      { label: 'MAAP', data: [{ x: 7.5, y: 8.5 }], backgroundColor: '#7000FF', pointRadius: 14, pointHoverRadius: 16 },
+      { label: 'Rapha', data: [{ x: 5.5, y: 7.5 }], backgroundColor: '#1a1a1a', pointRadius: 12, pointHoverRadius: 14 },
+      { label: 'Pas Normal Studios', data: [{ x: 7, y: 8 }], backgroundColor: '#64748B', pointRadius: 12, pointHoverRadius: 14 },
+      { label: 'Assos', data: [{ x: 9, y: 4 }], backgroundColor: '#94A3B8', pointRadius: 12, pointHoverRadius: 14 },
+      { label: 'Castelli', data: [{ x: 8.5, y: 3.5 }], backgroundColor: '#CBD5E1', pointRadius: 12, pointHoverRadius: 14 },
+      { label: 'Le Col', data: [{ x: 6.5, y: 5 }], backgroundColor: '#E2E8F0', pointRadius: 10, pointHoverRadius: 12 },
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 1.5,
+    scales: {
+      x: {
+        title: { display: true, text: 'Performance / Racing Credibility \u2192', font: { size: 13, weight: '600' } },
+        min: 0, max: 10,
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      },
+      y: {
+        title: { display: true, text: 'Design / Lifestyle Orientation \u2192', font: { size: 13, weight: '600' } },
+        min: 0, max: 10,
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (ctx) => ctx.dataset.label
+        }
+      },
+      legend: {
+        position: 'bottom',
+        labels: { usePointStyle: true, padding: 20, font: { size: 12 } }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
