@@ -288,6 +288,11 @@
 
     .comparison-table tr:hover .brand-col { background: rgba(112, 0, 255, 0.07); }
 
+    .comparison-table th.brand-col {
+      background: var(--purple);
+      color: #fff;
+    }
+
     .comparison-table .metric-label {
       font-weight: 500;
       color: var(--text-light);
@@ -932,7 +937,7 @@ if(sessionStorage.getItem('maap-auth')==='1'){document.getElementById('auth-gate
     <tbody>
       <tr>
         <td class="brand-col"><strong>MAAP</strong></td>
-        <td class="brand-col">RE:PRGRM, ESC:PRGRM, EQX:PRGRM, Flow State, Altered Spaces, Blowout</td>
+        <td class="brand-col">Seasonal programme including Flow State, Altered Spaces, Blowout, and Equinox challenges</td>
         <td class="brand-col">~4 per year, aligned to seasonal product launches</td>
         <td class="brand-col">Typically 8 hours of activity over a 2-week window. Rewards are discount codes (~$60 USD). Tied to the MAAP product calendar (Equinox, seasonal collections)</td>
       </tr>
