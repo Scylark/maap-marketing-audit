@@ -506,9 +506,67 @@
       canvas { max-width: 100%; page-break-inside: avoid; }
       section { page-break-before: auto; page-break-inside: avoid; }
     }
+    /* ROTATE OVERLAY */
+    .rotate-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      transition: opacity 0.4s ease;
+    }
+    .rotate-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .rotate-overlay svg {
+      width: 64px;
+      height: 64px;
+      animation: rotateHint 2s ease-in-out infinite;
+    }
+    @keyframes rotateHint {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(90deg); }
+    }
+    .rotate-overlay p {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--lime, #ccfd50);
+      margin: 0;
+      text-align: center;
+    }
+    .rotate-overlay .subtitle {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      margin: 0;
+    }
+    @media (min-width: 768px) {
+      .rotate-overlay { display: none !important; }
+    }
+    @media (orientation: landscape) {
+      .rotate-overlay { display: none !important; }
+    }
   </style>
 </head>
 <body>
+
+<!-- ROTATE PHONE OVERLAY -->
+<div class="rotate-overlay" id="rotate-overlay">
+  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="16" y="8" width="32" height="48" rx="4" stroke="#ccfd50" stroke-width="2.5" fill="none"/>
+    <line x1="28" y1="50" x2="36" y2="50" stroke="#ccfd50" stroke-width="2" stroke-linecap="round"/>
+    <path d="M52 20 L56 24 L52 28" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M56 24 C56 24 50 24 50 30" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </svg>
+  <p>Rotate your phone to landscape</p>
+  <p class="subtitle">This report is best viewed in landscape orientation</p>
+</div>
 
 <!-- PASSWORD GATE -->
 <div id="auth-gate" style="position:fixed;inset:0;z-index:9999;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">
@@ -577,13 +635,29 @@ if(sessionStorage.getItem('maap-auth')==='1'){document.getElementById('auth-gate
     <div class="data-sources">
       <strong>Data sources:</strong> DataForSEO (keyword rankings, SERP analysis), web research, public financial filings, trade press, brand websites, social media platforms. SimilarWeb data not provided.
     </div>
+    <div class="data-sources" style="margin-top: 0.5rem;">
+      <strong>Note:</strong> Some data points in this report are predicted or estimated based on available public information and would benefit from additional analysis to validate.
+    </div>
   </div>
 </header>
+
+<!-- DISCLAIMER -->
+<section id="disclaimer" style="padding: 2rem 0 1rem; border-bottom: 1px solid var(--border);">
+  <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 1.5rem 1.75rem;">
+    <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+      <div style="font-size: 1.2rem; flex-shrink: 0; margin-top: 1px;">&#9888;</div>
+      <div>
+        <p style="font-weight: 600; color: #92400E; margin-bottom: 0.5rem; font-size: 0.95rem;">Important note on data accuracy</p>
+        <p style="color: #78350F; font-size: 0.88rem; line-height: 1.6; margin-bottom: 0;">This audit is based on publicly available information, web research, and estimated data from third-party tools. While every effort has been made to ensure accuracy, some figures (including traffic estimates, revenue approximations, audience demographics, and competitive metrics) may not precisely reflect actual performance. This report should be treated as directional intelligence to inform strategic thinking, not as a source of verified financial or operational data. We recommend validating key data points with internal sources where possible.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- EXECUTIVE SUMMARY -->
 <section id="executive-summary">
   <h2>Executive Summary</h2>
-  <p>MAAP is a twelve-year-old Australian brand that has punched significantly above its weight in the premium cycling apparel category. With approximately $15M in annual revenue and 161 employees, it operates at a fraction of the scale of Rapha (roughly $120M revenue, 457 employees) yet commands a comparable level of brand heat among serious cyclists. The 2025 partnership with GreenEDGE Cycling, bringing MAAP onto the WorldTour as the technical supplier for Team Jayco AlUla, represents the single most significant strategic move in the brand's history and lands at precisely the right moment: Rapha has exited the WorldTour after ending its EF Pro Cycling partnership, leaving a visible gap in the premium cycling apparel conversation at the sport's highest level.</p>
+  <p>MAAP is a twelve-year-old Australian brand that has punched significantly above its weight in the premium cycling apparel category. With approximately $15M in annual revenue and 161 employees, it operates at a fraction of the scale of Rapha (roughly $120M revenue, 457 employees) yet commands a comparable level of brand heat among serious cyclists. The 2025 partnership with GreenEDGE Cycling (Team Jayco AlUla), bringing MAAP onto the WorldTour as the technical supplier, represents the single most significant strategic move in the brand's history and lands at precisely the right moment: Rapha has exited the WorldTour after ending its EF Pro Cycling partnership, leaving a visible gap in the premium cycling apparel conversation at the sport's highest level.</p>
 
   <p>The brand's physical retail network is impressively global for a business of this size, with nine LaB locations spanning Melbourne, Sydney, Berlin, Amsterdam, Los Angeles, Singapore, Hong Kong, Taipei, and Seoul. In the UK and European market specifically, however, MAAP's physical presence is limited to just two stores (Berlin and Amsterdam), with no UK flagship. This is a notable gap given the brand names the UK as a "major market" and that Rapha, despite closing five clubhouses, still operates the largest premium cycling retail network in the region.</p>
 
@@ -1844,6 +1918,22 @@ new Chart(perceptualCtx, {
     }
   }
 });
+// Rotate overlay dismiss
+(function() {
+  var overlay = document.getElementById('rotate-overlay');
+  if (!overlay) return;
+  function dismiss() {
+    overlay.classList.add('hidden');
+    setTimeout(function() { overlay.style.display = 'none'; }, 400);
+  }
+  overlay.addEventListener('click', dismiss);
+  window.addEventListener('orientationchange', function() {
+    setTimeout(dismiss, 300);
+  });
+  window.matchMedia('(orientation: landscape)').addEventListener('change', function(e) {
+    if (e.matches) dismiss();
+  });
+})();
 </script>
 
 </body>
