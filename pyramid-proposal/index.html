@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual Focus and Pyramid Motorcycle Accessories | Partnership Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Anton and JetBrains Mono are named in the font stacks below but deliberately not loaded,
+     matching manual-focus.co.uk: the site never self-hosts or imports those two, so headings
+     render in the Arial Narrow fallback and mono text in SF Mono/Menlo. Loading them for real
+     would make this doc look different to the live site. Only Inter is a genuine webfont here. -->
+<style>
+:root{
+  --bg:#0A0A0B;--paper:#16161B;--panel:#050507;--ink:#F2EDE6;--muted:#8C8780;--line:rgba(242,237,230,0.11);
+  --orange:#f2643b;--rust:#ff2d78;--greenv:#10bf7a;--green:#10bf7a;--pinkv:#ff2d78;--pink:#ff2d78;--cyanv:#00e5ff;--cyan:#00e5ff;--teal:#00e5ff;
+  --disp:'Anton','Bebas Neue','Arial Narrow',sans-serif;--mono:'JetBrains Mono','SF Mono',Menlo,monospace;--body:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:#FF2D78;color:#fff}
+a{color:var(--rust);text-decoration:none}
+.mf-logo{display:inline-block;height:30px;color:var(--ink);line-height:0}
+.mf-logo svg{height:100%;width:auto;display:block}
+.mf-logo path{fill:currentColor}.mf-logo circle{fill:none;stroke:currentColor;stroke-width:5.86;stroke-miterlimit:10}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 26px;background:rgba(10,10,11,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar .co{display:flex;align-items:center;gap:18px}
+.pyr-logo{height:26px;width:auto;display:block}
+.divider{width:1px;height:26px;background:var(--line)}
+.topbar .rt{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 26px}
+.hero{padding:76px 0 48px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:40px;height:1px;background:linear-gradient(135deg,#FF2D78,#C026D3 50%,#00E5FF)}
+.hero h1{font-family:var(--disp);font-weight:400;font-size:clamp(2.5rem,6.5vw,6rem);line-height:.92;letter-spacing:-.01em;text-transform:uppercase;margin:0}
+.hero h1 .o{color:var(--orange)}
+.hero .dek{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:680px;margin:22px 0 0;line-height:1.5}
+.hero .cobrand{display:flex;align-items:center;gap:14px;margin-top:30px;font-family:var(--mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.toc{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;position:relative;z-index:2}
+.toc a{color:var(--muted);text-decoration:none}
+.toc a:hover{color:var(--rust)}
+.toc a b{color:var(--rust);font-weight:700;margin-right:7px}
+.hero .cobrand .mf-logo{height:24px}
+.hero{position:relative}
+.hero .eyebrow,.hero h1,.hero .dek,.hero .cobrand,.hero .btnrow{position:relative;z-index:2}
+/* animated focus rings, ported from the Manual Focus site */
+.foring{position:absolute;pointer-events:none;width:min(340px,40vmin);aspect-ratio:1;opacity:0;z-index:0;transition:opacity 1.3s ease;filter:drop-shadow(0 14px 30px rgba(0,0,0,.5));--hueA:#FF2D78;--hueB:#00E5FF}
+.foring.in{opacity:.92}
+.hero .foring{top:8px;right:-38px}
+.foring .persp{width:100%;height:100%;perspective:1400px;perspective-origin:50% 50%}
+.foring .tilt{width:100%;height:100%;transform:rotateX(62deg) rotateY(-18deg);transform-style:preserve-3d}
+.foring .spin{width:100%;height:100%;transform-style:preserve-3d;transform-origin:50% 50%;animation:foring-spin 90s linear infinite}
+.foring .r3{position:absolute;width:60%;height:60%;left:20%;transform-style:preserve-3d}
+.foring .r3.top{top:8%}.foring .r3.bot{top:32%}
+.foring .sl{position:absolute;inset:0;border-radius:50%;border:18px solid;background:transparent;box-sizing:border-box}
+.foring .r3.top .sl{border-color:color-mix(in srgb, var(--hueA) calc((1 - var(--t))*100%), var(--hueB))}
+.foring .r3.bot .sl{border-color:color-mix(in srgb, var(--hueB) calc((1 - var(--t))*100%), var(--hueA))}
+@keyframes foring-spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+@media(prefers-reduced-motion:reduce){.foring .spin{animation:none}}
+@media(max-width:760px){.foring{width:170px;opacity:.4!important}.hero .foring{right:-26px;top:-6px}}
+/* buttons */
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:15px 30px;border-radius:999px;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease;text-decoration:none;cursor:pointer}
+.btn-primary{color:#fff;background:linear-gradient(135deg,#FF2D78,#C026D3 50%,#00E5FF);box-shadow:0 6px 20px rgba(255,45,120,.32)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(0,229,255,.30)}
+.btn-ghost{color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--rust);color:var(--rust)}
+.btn-ghost-l{color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.btn-ghost-l:hover{border-color:#fff}
+.cta{position:relative;overflow:hidden}
+.cta h3,.cta p,.cta .btnrow{position:relative;z-index:2}
+.cta-ring{--hueA:#FF2D78;--hueB:#00E5FF;bottom:-80px;right:-40px}
+.cta-ring.in{opacity:.5}
+.sec{padding:54px 0;border-top:1px solid var(--line)}
+.kick{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;gap:10px;align-items:center}
+.kick .no{background:var(--pinkv);color:#0A0A0B;border-radius:4px;padding:1px 7px;font-weight:700}
+.sec h2{font-family:var(--disp);font-weight:400;font-size:clamp(28px,4.6vw,50px);line-height:.92;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 18px}
+.intro{font-size:18px;color:var(--ink);max-width:740px;margin:0 0 8px;line-height:1.55}
+p{margin:0 0 14px}
+.small{font-size:12.5px;color:var(--muted);font-family:var(--mono);line-height:1.5}
+/* principle / point cards */
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.card .ct{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--rust);margin-bottom:7px}
+.card h3{font-family:var(--disp);font-weight:400;font-size:21px;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 8px;line-height:1.02}
+.card p{font-size:14px;color:var(--muted);margin:0;line-height:1.5}
+@media(max-width:760px){.cards3{grid-template-columns:1fr}}
+/* what we see rows */
+.seelist{margin-top:22px;display:flex;flex-direction:column;gap:2px}
+.seerow{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+.seerow:last-child{border-bottom:none}
+.seerow .big{font-family:var(--disp);font-weight:400;font-size:34px;line-height:.95;color:var(--ink)}
+.seerow .big small{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:6px;font-weight:400}
+.seerow .txt{font-size:15px;color:var(--ink);align-self:center}
+.seerow .txt b{font-weight:700}
+@media(max-width:600px){.seerow{grid-template-columns:1fr;gap:6px}}
+/* engine diagram */
+.engine{margin:24px 0 6px}
+.eflow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.estage{flex:1;min-width:150px;background:var(--paper);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:12px;padding:16px 16px 18px}
+.estage .en{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.estage h4{font-family:var(--disp);font-weight:400;font-size:20px;text-transform:uppercase;letter-spacing:-.01em;margin:5px 0 6px;line-height:1}
+.estage p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.45}
+.earrow{display:flex;align-items:center;justify-content:center;width:34px;color:var(--muted);font-size:20px;flex-shrink:0}
+.efound{margin-top:12px;background:var(--panel);color:#fff;border-radius:12px;padding:16px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.efound .ef{font-family:var(--disp);font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.02em}
+.efound p{margin:0;font-size:13.5px;color:#d6d2cc;flex:1;min-width:240px}
+.eloop{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:12px;text-align:center}
+@media(max-width:820px){.earrow{width:100%;height:26px;transform:rotate(90deg)}.eflow{flex-direction:column}}
+/* workstream detail */
+.ws{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.wscard{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;position:relative}
+.wscard::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:4px;border-radius:3px;background:var(--c)}
+.wscard .wtag{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);display:flex;align-items:center;gap:9px}
+.wscard .wtag::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--c)}
+.wscard h3{font-family:var(--disp);font-weight:400;font-size:23px;text-transform:uppercase;letter-spacing:-.01em;margin:8px 0 8px;line-height:1}
+.wscard p{font-size:14px;color:var(--ink);margin:0 0 10px;line-height:1.5}
+.wscard .lens{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+@media(max-width:760px){.ws{grid-template-columns:1fr}}
+.tradenote{margin-top:14px;font-size:14px;color:var(--muted);background:var(--paper);border:1px dashed var(--line);border-radius:12px;padding:16px 18px}
+.tradenote b{color:var(--ink)}
+/* in practice */
+.subh{font-family:var(--disp);font-weight:400;font-size:27px;text-transform:uppercase;letter-spacing:-.01em;margin:40px 0 4px;border-top:1px solid var(--line);padding-top:32px}
+.submut{color:var(--muted);font-size:14px;margin:0 0 18px}
+.practice{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:14px 0}
+.prachead{font-family:var(--disp);font-weight:400;font-size:21px;text-transform:uppercase;letter-spacing:-.01em;display:flex;align-items:baseline;gap:11px;margin-bottom:14px;line-height:1.05}
+.pracn{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;background:var(--panel);border-radius:5px;padding:2px 8px;flex-shrink:0}
+.steps{display:flex;flex-direction:column;gap:11px}
+.step{display:flex;gap:12px;font-size:14px;line-height:1.5;color:var(--ink)}
+.step .sn{flex-shrink:0;width:24px;height:24px;border-radius:6px;background:var(--orange);color:#fff;font-family:var(--mono);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.step b{font-weight:700}
+.pracresult{margin-top:15px;background:var(--panel);color:#fff;border-radius:10px;padding:13px 16px;font-size:14px;font-weight:600;line-height:1.45}
+.submut2{color:var(--muted);font-size:13px;margin:-2px 0 12px}
+.mailflow{display:flex;flex-direction:column;gap:0}
+.mrow{display:flex;gap:14px;align-items:baseline;font-size:14.5px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--ink)}
+.mrow:last-child{border-bottom:none}
+.mday{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--rust);text-transform:uppercase;min-width:52px}
+.weekmini{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wm{font-size:13.5px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 13px;line-height:1.4;color:var(--ink)}
+.wm .wmd{display:block;font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--rust);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+@media(max-width:600px){.weekmini{grid-template-columns:1fr}}
+/* flowchart */
+.chart{display:flex;flex-direction:column;max-width:600px;margin:6px auto 4px}
+.fbox{background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:10px;padding:12px 15px;font-size:14px;font-weight:600;color:var(--ink);line-height:1.35}
+.fbox span{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin-top:4px}
+.fbox.start{text-align:center;background:var(--paper);border-left:1px solid var(--line);border-top:4px solid var(--orange)}
+.fbox.end{background:var(--panel);color:#fff;border:none;text-align:center;font-family:var(--disp);font-weight:400;font-size:20px;text-transform:uppercase;letter-spacing:.02em;padding:16px}
+.fdown{text-align:center;color:var(--muted);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:6px 0;line-height:1}
+.fdown .ar{display:block;font-size:15px;margin-bottom:2px}
+.fgate{background:var(--paper);border:2px dashed var(--orange);border-radius:10px;padding:13px 15px;text-align:center;font-family:var(--mono);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink)}
+.fgate .branch{font-family:var(--body);font-weight:400;text-transform:none;letter-spacing:0;font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
+.fgate .pass{color:var(--green);font-weight:700}
+.fgate .fail{color:var(--rust);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chips span{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:2px 10px}
+.floop{align-self:center;margin-top:12px;text-align:center;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--rust);border:1px dashed rgba(255,45,120,.45);border-radius:20px;padding:8px 16px}
+/* horizontal engagement flow */
+.hflow{display:flex;align-items:stretch;gap:0;flex-wrap:nowrap;margin:8px 0 0}
+.hstage{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-top:4px solid var(--orange);border-radius:12px;padding:13px 13px}
+.hstage.start{background:var(--paper)}
+.hstage.gate{background:var(--paper);border:2px dashed var(--pinkv)}
+.hstage.run{background:var(--panel);border:none;border-top:4px solid var(--orange)}
+.hstage .hp{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.hstage.run .hp{color:#b3aea4}
+.hstage h4{font-family:var(--disp);font-weight:400;font-size:17px;text-transform:uppercase;letter-spacing:-.01em;margin:5px 0 6px;line-height:1.02}
+.hstage.run h4{color:#fff}
+.hstage p{font-size:11.5px;color:var(--muted);margin:0;line-height:1.4}
+.hstage.run p{color:#d6d2cc}
+.harrow{display:flex;align-items:center;justify-content:center;width:26px;flex-shrink:0;color:var(--muted);font-size:17px}
+.hcap{font-size:13px;color:var(--muted);margin-top:16px;line-height:1.5}
+.hcap .pass{color:var(--green);font-weight:700}.hcap .fail{color:var(--rust);font-weight:700}
+.hloopwrap{text-align:center;margin-top:12px}
+.hloop{display:inline-block;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--rust);border:1px dashed rgba(255,45,120,.45);border-radius:20px;padding:8px 16px}
+@media(max-width:860px){.hflow{flex-direction:column}.harrow{width:100%;height:24px;transform:rotate(90deg)}}
+/* workflow */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.pcell{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 18px;border-top:5px solid var(--c)}
+.pcell .pw{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.pcell h4{font-family:var(--disp);font-weight:400;font-size:20px;text-transform:uppercase;margin:5px 0 8px;line-height:1.02}
+.pcell p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
+.pcell .tag{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink);border:1px solid var(--c);border-radius:20px;padding:2px 8px}
+@media(max-width:860px){.flow{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.flow{grid-template-columns:1fr}}
+/* why list */
+.why{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.wrow{display:flex;gap:12px;align-items:flex-start}
+.wrow .wk{flex-shrink:0;width:26px;height:26px;border-radius:7px;background:var(--panel);color:#fff;font-family:var(--disp);font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.wrow .wt{font-size:14.5px}.wrow .wt b{font-weight:700}
+@media(max-width:700px){.why{grid-template-columns:1fr}}
+/* cta */
+.cta{background:var(--panel);color:#fff;border-radius:16px;padding:34px 30px;margin-top:24px}
+.cta h3{font-family:var(--disp);font-weight:400;font-size:clamp(26px,4vw,42px);text-transform:uppercase;margin:0 0 12px;line-height:1}
+.cta p{color:#d6d2cc;max-width:660px;font-size:15.5px}
+.cta .co{color:var(--orange)}
+footer{border-top:1px solid var(--line);margin-top:22px}
+footer .wrap{padding:26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+footer .fm{font-family:var(--mono);font-size:11px;color:var(--muted);max-width:560px;line-height:1.5}
+@media print{.topbar{position:static}}
+/* ORACLE */
+.ographwrap{margin:22px 0 6px;background:#050507 radial-gradient(circle at 50% 46%, rgba(255,45,120,.07), transparent 62%);border:1px solid var(--line);border-radius:16px;padding:4px}
+svg#brainO{width:100%;height:auto;display:block}
+svg#brainO text{font-family:var(--disp);letter-spacing:.02em;pointer-events:none}
+svg#brainO .hub{cursor:pointer}
+.ocaption{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;text-align:center;margin:4px 0 0}
+.ocards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+@media(max-width:820px){.ocards{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.ocards{grid-template-columns:1fr}}
+.ocard{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:14px 15px}
+.ocard h4{font-family:var(--disp);font-weight:400;font-size:17px;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 9px;line-height:1.04}
+.ochips{display:flex;flex-wrap:wrap;gap:5px}
+.ochips span{font-family:var(--mono);font-size:10.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:2px 8px}
+/* TIMELINE */
+.tl{position:relative;margin-top:22px}
+.tl::before{content:"";position:absolute;left:24px;top:14px;bottom:30px;width:2px;background:linear-gradient(var(--pinkv),var(--cyanv),var(--greenv),var(--orange))}
+.phase{position:relative;display:grid;grid-template-columns:50px 1fr;gap:18px;margin-bottom:14px}
+.node{width:50px;height:50px;border-radius:50%;background:var(--panel);border:2px solid var(--c);color:var(--c);font-family:var(--disp);font-weight:400;font-size:20px;display:flex;align-items:center;justify-content:center;z-index:1;flex-shrink:0}
+.pcard{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:14px;padding:16px 18px}
+.ptime{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--c)}
+.pcard h3{font-family:var(--disp);font-weight:400;font-size:22px;text-transform:uppercase;letter-spacing:-.01em;margin:5px 0 8px;line-height:1.04}
+.pcard>p{font-size:14px;color:var(--ink);margin:0 0 11px}
+.pcard ul{margin:0 0 12px;padding-left:18px}
+.pcard li{font-size:13px;color:var(--muted);margin:5px 0}
+.unlock{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border-top:1px dashed var(--line);padding-top:9px}
+.unlock b{color:var(--ink)}
+.ptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#0A0A0B;background:var(--c);border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:3px}
+.endnote{margin-top:20px;background:var(--panel);color:#fff;border-radius:14px;padding:16px 18px;font-size:14px;line-height:1.5}
+.endnote b{color:var(--cyanv)}
+@media(max-width:520px){.phase{grid-template-columns:42px 1fr;gap:12px}.node{width:42px;height:42px;font-size:16px}.tl::before{left:20px}}
+.pcost{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.pcost span{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:3px 10px}
+.pcost .money{color:var(--c);border-color:var(--c)}
+.commercials{margin-top:22px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.commercials h3{font-family:var(--disp);font-weight:400;font-size:24px;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 14px}
+.clead{font-size:15.5px;color:var(--ink);margin:0 0 16px;line-height:1.55}
+.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 14px}
+@media(max-width:700px){.compare{grid-template-columns:1fr}}
+.ccard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 16px}
+.ccard.us{border:1.5px solid var(--pinkv);background:var(--paper);box-shadow:0 0 0 3px rgba(255,45,120,.12)}
+.ccard .cw{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ccard.us .cw{color:var(--pinkv)}
+.ccard h4{font-family:var(--disp);font-weight:400;font-size:17px;text-transform:uppercase;letter-spacing:-.01em;margin:3px 0 0;line-height:1.05}
+.ccard .cbig{font-family:var(--disp);font-weight:400;font-size:27px;color:var(--ink);line-height:1;margin:8px 0 10px}
+.ccard.us .cbig{color:var(--pinkv)}
+.ccard ul{margin:0;padding-left:16px}
+.ccard li{font-size:12.5px;color:var(--muted);margin:5px 0;line-height:1.4}
+.ccard.us li{color:var(--ink)}
+.valuebar{background:var(--panel);color:#fff;border-radius:12px;padding:15px 17px;font-size:14px;line-height:1.5;border-left:4px solid var(--greenv)}
+.valuebar b{color:var(--greenv)}
+.cnote{font-size:12.5px;color:var(--muted)!important;margin-top:12px!important}
+/* proposal at a glance */
+.stack{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.slayer{display:grid;grid-template-columns:110px 1fr auto;gap:16px;align-items:center;background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:14px;padding:16px 20px}
+.slayer .sn{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c)}
+.slayer h4{font-family:var(--disp);font-weight:400;font-size:21px;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 3px;line-height:1}
+.slayer p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.45}
+.slayer .sc{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:5px 12px;white-space:nowrap}
+.slayer.run{background:var(--panel);border-left-color:var(--c)}
+.slayer.run h4{color:#fff}
+.slayer.run p{color:#d6d2cc}
+.sdown{text-align:center;color:var(--muted);font-size:14px;line-height:1;margin:-2px 0}
+.glance{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.glance div{flex:1;min-width:130px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 15px}
+.glance .gb{font-family:var(--disp);font-weight:400;font-size:25px;color:var(--ink);line-height:1}
+.glance .gl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-top:5px}
+@media(max-width:640px){.slayer{grid-template-columns:1fr;gap:6px}.slayer .sc{justify-self:start}}
+/* slack mock */
+.slack{background:#1A1D21;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:18px;font-size:14px}
+.slack .sbar{display:flex;align-items:center;gap:9px;padding:11px 16px;border-bottom:1px solid rgba(242,237,230,.09);font-weight:700;color:#D1D2D3;font-size:13.5px}
+.slack .sbar .hash{color:#9a9b9e;font-weight:400}
+.slack .smsg{display:flex;gap:11px;padding:12px 16px}
+.slack .smsg+.smsg{padding-top:2px}
+.slack .sav{flex-shrink:0;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#0A0A0B}
+.slack .sav.adam{background:#f2643b}
+.slack .sav.orc{background:linear-gradient(135deg,#FF2D78,#C026D3 60%,#00E5FF);color:#fff}
+.slack .sbody{min-width:0}
+.slack .swho{font-weight:800;color:#D1D2D3;font-size:13.5px}
+.slack .swho .app{font-size:9.5px;font-weight:700;color:#9a9b9e;background:rgba(242,237,230,.12);border-radius:3px;padding:1px 4px;margin-left:5px;vertical-align:1px}
+.slack .swho .stime{font-weight:400;color:#9a9b9e;font-size:11.5px;margin-left:7px}
+.slack .stext{color:#D1D2D3;margin-top:2px;line-height:1.5}
+.slack .stext .mention{color:#3ea4ff;background:rgba(62,164,255,.12);border-radius:3px;padding:0 3px}
+.slack ol.stop5{margin:7px 0 5px;padding-left:20px;color:#D1D2D3}
+.slack ol.stop5 li{margin:3px 0}
+.slack ol.stop5 b{color:#fff}
+.slack .ssrc{font-size:12px;color:#9a9b9e;margin-top:6px;border-left:3px solid rgba(242,237,230,.18);padding-left:9px}
+.slackcap{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;text-align:center;margin-top:8px}
+.commercials p{font-size:14px;color:var(--ink);margin:0 0 10px;line-height:1.55}
+.commercials p:last-child{margin-bottom:0;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="co">
+    <span class="mf-logo" id="mflogoTop"></span>
+    <span class="divider"></span>
+    <img class="pyr-logo" alt="Pyramid Motorcycle Accessories" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaQAAAAwCAYAAABezA7UAAAbw0lEQVR42u1dabRcVZX+dlW9DAQSQFQw0BAUZFKEbpkUtAmCSCsKIiagiHYzCIouRe221V4LtUFaRQS6FXU5o4SFiCOgoICISqNAK4ICIQQJSUjIQJL3Xt379Y+7j2/n5Jxzb71XwyPovsurQlV9967d5+9v/3tfc7ADXVVFNNNdVUkUg2zPvPkTxJ37fq0amppppqqqlfwqipr1NJfpEF/ZLkEMkGSalHqaaaaqqppn4Jo+1J3qTCaK2+nlBbSTXVVFNNNfVDGLX0dW+S96oQGiY5QjIneQfJKdadV1NNNdVUU03dFkZD+jqX5BIVRqMkM5JtFUwkOc9aUjXVVFNNNdXULUHUNG66txrBM6xWUa5CyVlJdzsrqY4l1VRTTTXV1E1hNEXff5hjlOlrzo2pra+n6G/qWFJNNdVUU00TFkbORTdE8vMqaDZ4Qij3rra+/p7kdJIyHitJKjSuUfW7AyIBQAC5iLCkLwKgpd9n4n65iOR9ZoJGhTEO9lH7NdmDiZXnaRxj5/ovZl45oD52nX+0f66Pg+xf2T4iALLxzq/pZ3IdiEhW8X52rcvfynqYwNgDQEtERkk+A8BXAbwKwLDum2WxoREAUwD8s4h8Ucc/mwz9G5iZWWHAq5qrMgBmGMjvB+QOkC7dpzFJ+9joxrz2mxd7vQ4rKr+bHc93q9+93INITtX3u5K8x4AXqlJbXXr3kZyha6CjvkmKqUQk0yzckwCsUwkpAe1sEMyRA1gL4CEAdwC4WURWkRRfIrvPSO4I4EKV4oyMxyiAd4nIktC9esGMIpKTfCeAY7RPvv81AzANwA9E5FL3G2+eXg/gLQA2mHkaKI+b92sALwK4E8CNIrLazst4DhP7Lcmd
+gj8IIF9gTa4/vlAAAAAElFTkSuQmCC">
+  </div>
+  <span class="rt">Partnership Proposal &middot; Jul 2026</span>
+</div>
+
+<div class="wrap">
+<header class="hero">
+  <div class="foring" aria-hidden="true"><div class="persp"><div class="tilt"><div class="spin"></div></div></div></div>
+  <div class="eyebrow">Manual Focus &times; Pyramid Motorcycle Accessories</div>
+  <h1>More from what<br>you've already <span class="o">built.</span></h1>
+  <p class="dek">After a day inside the business, this is the plan rebuilt around what we actually saw. You've got forty years of trust, a strong catalogue and a loyal following. What's missing is time and hands. That's the job we'd do, across your reporting, your listings, your content and your campaigns. We set it up, and we stay to run it.</p>
+  <div class="cobrand"><span class="mf-logo" id="mflogoHero"></span> we set it up, and we stay to run it.</div>
+  <div class="btnrow"><a class="btn btn-primary" href="#roadmap">See the plan &darr;</a><a class="btn btn-ghost" href="#ask">Start the Oracle build &rarr;</a></div>
+  <nav class="toc" aria-label="Contents">
+    <a href="#see"><b>01</b>Where things stand</a>
+    <a href="#proposal"><b>02</b>The proposal</a>
+    <a href="#oracle"><b>03</b>Know the business</a>
+    <a href="#numbers"><b>04</b>See the numbers</a>
+    <a href="#engine"><b>05</b>Do the marketing</a>
+    <a href="#roadmap"><b>06</b>Plan &amp; costs</a>
+    <a href="#dreammachine"><b>DM</b>Live concept</a>
+    <a href="#why"><b>07</b>Your questions</a>
+    <a href="#ask"><b>08</b>Start here</a>
+  </nav>
+</header>
+</div>
+
+<!-- 01 WHAT WE HEARD -->
+<div class="wrap"><section class="sec" id="see">
+  <div class="kick"><span class="no">01</span> What we took from the day</div>
+  <h2>Where things<br>stand.</h2>
+  <p class="intro">You know the last proposal was written from the outside. This one isn't. After a day inside the business, three things stand out, and they point at the same answer: the next bit of growth comes from doing more with the team you've got.</p>
+  <div class="seelist">
+    <div class="seerow"><div class="big">1800%<small>Google Shopping ROAS</small></div><div class="txt"><b>You know how to sell.</b> Google Shopping is returning 1500 to 1800%. But there's no ROAS on Meta at all, and no single report that shows what's selling by product. You're doing well without the full picture.</div></div>
+    <div class="seerow"><div class="big">15&rarr;5%<small>annual growth</small></div><div class="txt"><b>Growth is slowing.</b> It's run at about 15% a year since 2019 and is forecast to drop to about 5%. With a hiring freeze on, the next bit of growth has to come from doing more with the same people. That's the part we help with.</div></div>
+    <div class="seerow"><div class="big">By hand<small>reporting today</small></div><div class="txt"><b>The numbers live in a Google Doc.</b> Trading figures are copied out of Shopify by hand for meetings. A daily view of what's actually selling, by product and margin, would change how the team decides. It's also the quickest thing to fix.</div></div>
+  </div>
+  <p class="small" style="margin-top:16px">We'll also tell you what isn't worth doing. Search here, for example, is a slow build off hundreds of small, specific terms, not a quick win, and it sits under the new brand as reassurance, not the headline. Better you hear that now than later.</p>
+</section></div>
+
+<!-- 02 THE PROPOSAL AT A GLANCE -->
+<div class="wrap"><section class="sec" id="proposal">
+  <div class="kick"><span class="no">02</span> What we're proposing</div>
+  <h2>The proposal,<br>in one look.</h2>
+  <p class="intro">Build the marketing capability you can't hire for right now, and run it with you. It goes in as three layers, in order, because each one makes the next work: know the business, see the numbers, then do the marketing. And we stay to run it, sitting alongside you on the strategic calls.</p>
+  <div class="stack">
+    <div class="slayer" style="--c:var(--pinkv)">
+      <div class="sn">Layer 01</div>
+      <div class="st"><h4>Know the business</h4><p>The Pyramid Oracle: one knowledge base everything else reads from, and anyone can ask from Slack.</p></div>
+      <div class="sc">2 wks &middot; ~&pound;1.6k</div>
+    </div>
+    <div class="sdown">&darr;</div>
+    <div class="slayer" style="--c:var(--cyanv)">
+      <div class="sn">Layer 02</div>
+      <div class="st"><h4>See the numbers</h4><p>A daily trading dashboard. Meta assessed properly against the rest, product-level truth, no more copy-and-paste reporting.</p></div>
+      <div class="sc">~3 wks &middot; ~&pound;2.4k</div>
+    </div>
+    <div class="sdown">&darr;</div>
+    <div class="slayer" style="--c:var(--greenv)">
+      <div class="sn">Layer 03</div>
+      <div class="st"><h4>Do the marketing</h4><p>The engine: strategy, content, email, social and catalogue operations, aimed with the data and run in your voice.</p></div>
+      <div class="sc">~9 wks &middot; ~&pound;8k</div>
+    </div>
+    <div class="sdown">&darr;</div>
+    <div class="slayer run" style="--c:var(--orange)">
+      <div class="sn">Then</div>
+      <div class="st"><h4>We run it with you</h4><p>Monthly reporting, quarterly strategy, and a seat beside the leadership team.</p></div>
+      <div class="sc">from ~&pound;1k/mo</div>
+    </div>
+  </div>
+  <div class="glance">
+    <div><div class="gb">~14 wks</div><div class="gl">Core build, start to live</div></div>
+    <div><div class="gb">~&pound;12k</div><div class="gl">Core build, all in</div></div>
+    <div><div class="gb">2 wks</div><div class="gl">Only commitment today</div></div>
+    <div><div class="gb">Yours</div><div class="gl">Everything built, no lock-in</div></div>
+  </div>
+  <p class="small" style="margin-top:14px">Each layer stands on its own and there's a decision gate between them, so you can stop at any point and keep everything built so far. The rest of this document walks through the three layers, then the plan and the money.</p>
+</section></div>
+
+<!-- 03 LAYER ONE: ORACLE -->
+<div class="wrap"><section class="sec" id="oracle">
+  <div class="kick"><span class="no">03</span> Layer one &middot; the foundation</div>
+  <h2>First: know<br>the business.</h2>
+  <p class="intro">Layer one is the Pyramid Oracle: one knowledge base holding how the business actually works, its numbers, products, customers, brand and decisions. The dashboard, the content and the campaigns all read from it, so nothing downstream is working off a guess. Get it right once, keep it current, and everything on top of it stays accurate.</p>
+  <div class="ographwrap"><svg id="brainO" viewBox="0 0 900 720" role="img" aria-label="The Pyramid Oracle, a linked knowledge base"></svg></div>
+  <p class="ocaption">The Oracle a few months in: nine hubs, every note linked, and the records it accumulates, meetings, decisions, model pages, trading data, clustered around them. Tap a hub to see what is in it.</p>
+
+  <h3 class="subh">Why a web, and not a folder</h3>
+  <p class="submut">Most businesses keep what they know in scattered docs, and it goes stale the moment it is saved. The Oracle is built as a web of linked notes instead: a hub for each part of the business (the nodes), joined to the notes around it (the spokes). It is a set of plain linked files in Obsidian, and it matters for three reasons.</p>
+  <div class="cards3">
+    <div class="card"><div class="ct">Connected</div><h3>Not scattered</h3><p>A fact sits next to the product it describes, the customer who buys it and the decision behind it. The links are where the insight is, not the pages.</p></div>
+    <div class="card"><div class="ct">One source of truth</div><h3>Change it once</h3><p>Update a fact in its note and everything joined to it stays right. No more the same number saying three different things across docs, slides and email.</p></div>
+    <div class="card"><div class="ct">Built for AI</div><h3>Reads in context</h3><p>A web of linked notes is exactly what an AI works best from. Point the content engine or the dashboard at it and it answers in context, because the context is already wired in.</p></div>
+  </div>
+
+  <h3 class="subh">Ask it, right from Slack</h3>
+  <p class="submut">The Oracle isn't a folder you go looking in. It sits in your Slack, and anyone on the team can ask it a question in plain English. It answers from the knowledge base and the trading data, and tells you where the answer came from.</p>
+  <div class="slack">
+    <div class="sbar"><span class="hash">#</span>leadership</div>
+    <div class="smsg">
+      <div class="sav adam">A</div>
+      <div class="sbody">
+        <div class="swho">Adam <span class="stime">9:14</span></div>
+        <div class="stext"><span class="mention">@Oracle</span> what are our top five best selling products this month?</div>
+      </div>
+    </div>
+    <div class="smsg">
+      <div class="sav orc">&#9670;</div>
+      <div class="sbody">
+        <div class="swho">Oracle <span class="app">APP</span> <span class="stime">9:14</span></div>
+        <div class="stext">Top five by revenue, this month to date:
+          <ol class="stop5">
+            <li><b>Extenda Fenda, Yamaha MT-09</b> &middot; &pound;4,310 &middot; up 22% on last month</li>
+            <li><b>Hugger, Honda CB750 Hornet</b> &middot; &pound;3,890 &middot; up 8%</li>
+            <li><b>Touring screen, Tracer 9</b> &middot; &pound;3,420 &middot; steady</li>
+            <li><b>Seat cowl, MT-07</b> &middot; &pound;2,960 &middot; up 31%, new colour driving it</li>
+            <li><b>Belly pan, CB650R</b> &middot; &pound;2,540 &middot; down 6%</li>
+          </ol>
+          Same five as this time last year, except the seat cowl, which is new to the list. Want the eBay split as well?
+        </div>
+        <div class="ssrc">Source: daily trading data (Shopify), catalogue notes. Figures checked against yesterday's sync.</div>
+      </div>
+    </div>
+    <div class="smsg">
+      <div class="sav adam">A</div>
+      <div class="sbody">
+        <div class="swho">Adam <span class="stime">9:16</span></div>
+        <div class="stext"><span class="mention">@Oracle</span> what did we decide about the new model launch process?</div>
+      </div>
+    </div>
+    <div class="smsg">
+      <div class="sav orc">&#9670;</div>
+      <div class="sbody">
+        <div class="swho">Oracle <span class="app">APP</span> <span class="stime">9:16</span></div>
+        <div class="stext">Agreed 15 July: new-model listings go live within a day of parts being shot, using the automated listing flow, with Andy's product renders staying in design. Owner: Manual Focus to build, Pyramid to approve copy.</div>
+        <div class="ssrc">Source: meeting record, on-site session, 15 July 2026.</div>
+      </div>
+    </div>
+  </div>
+  <p class="slackcap">Illustrative conversation, example figures. Live numbers flow in once layer two is connected.</p>
+
+  <h3 class="subh">What is in it</h3>
+  <div class="ocards" id="ocards"></div>
+  <div class="tradenote" style="margin-top:18px"><b>Built on what you already trust.</b> We take your own knowledge-base approach as the base and make it better: source-traced, so every answer can be checked, and queryable, so you can ask it "what did we decide about X" and get a straight answer. And because it is plain linked files in Obsidian, you own it outright, with no lock-in to anyone's platform.</div>
+</section></div>
+
+<!-- 04 LAYER TWO: THE NUMBERS -->
+<div class="wrap"><section class="sec" id="numbers">
+  <div class="kick"><span class="no">04</span> Layer two &middot; the intelligence</div>
+  <h2>Then: see<br>the numbers.</h2>
+  <p class="intro">What is marketing without good data? Guesswork with a budget. So before we market anything, one daily dashboard pulling Shopify, GA4, Google Shopping and Meta into a single view. The one you called a no-brainer, and the fastest win in the whole plan.</p>
+  <div class="seelist">
+    <div class="seerow"><div class="big">Daily<small>not monthly</small></div><div class="txt"><b>Yesterday's trading, every morning.</b> Sales by product and margin against a daily budget, in front of the team without anyone copying anything. The Google Doc retires.</div></div>
+    <div class="seerow"><div class="big">Meta<small>assessed, not guessed</small></div><div class="txt"><b>A straight answer on whether Meta earns its place.</b> Attribution and return checked properly alongside the strong Google Shopping numbers, so you know if it's worth more spend, less, or none at all.</div></div>
+    <div class="seerow"><div class="big">Last yr<small>seasonal memory</small></div><div class="txt"><b>"What sold this time last year?"</b> Seasonal prompts and campaign suggestions surface on their own, so the engine in layer three is always aiming at a real opportunity.</div></div>
+  </div>
+</section></div>
+
+<!-- 05 LAYER THREE: THE ENGINE -->
+<div class="wrap"><section class="sec" id="engine">
+  <div class="kick"><span class="no">05</span> Layer three &middot; the engine</div>
+  <h2>Then: do<br>the marketing.</h2>
+  <p class="intro">With the Oracle for context and the dashboard for aim, layer three is the engine that does the marketing. It works because the parts join up. Operations keeps the catalogue tidy and gets new models live quickly. Content turns the catalogue into pages, guides and product copy. That feeds search, social and press. Email and reviews bring people back. And it all sounds like Pyramid, because the same brand voice and the same checks run through the lot.</p>
+  <div class="engine">
+    <div class="eflow">
+      <div class="estage" style="--c:var(--orange)"><div class="en">Part 01</div><h4>Operations</h4><p>One daily view of the numbers, clean catalogue, fast launches.</p></div>
+      <div class="earrow">&rarr;</div>
+      <div class="estage" style="--c:var(--cyanv)"><div class="en">Part 02</div><h4>Content</h4><p>Pages, guides and product copy at scale.</p></div>
+      <div class="earrow">&rarr;</div>
+      <div class="estage" style="--c:var(--pinkv)"><div class="en">Part 03</div><h4>Reach</h4><p>Search, social and earned media.</p></div>
+      <div class="earrow">&rarr;</div>
+      <div class="estage" style="--c:var(--greenv)"><div class="en">Part 04</div><h4>Retention</h4><p>Email and reviews bring them back.</p></div>
+    </div>
+    <div class="efound"><span class="ef">The basics under it all</span><p>Your brand voice, taken from your own best writing, and a simple check that every listing, page, email and post passes before it goes out.</p></div>
+    <div class="eloop">&#8635; and it loops: more buyers and reviews feed back into the catalogue and the content</div>
+  </div>
+
+  <div class="ws">
+    <div class="wscard" style="--c:var(--orange)"><div class="wtag">Start here</div><h3>Operations &amp; Reporting</h3><p>Two jobs at once. A daily dashboard that pulls Shopify, GA4 and Meta into one view by product, so Meta isn't running blind and the team works off real figures, not a copied-out doc. And automated listings and channel syncing across the catalogue and distributor brands, so new-model launches become easier and more efficient. The plainest, quickest thing we bring.</p><div class="lens">bi-dashboard &middot; ecommerce agents &middot; eval-gated drafting</div></div>
+    <div class="wscard" style="--c:var(--cyanv)"><div class="wtag">Sell more of what's on the site</div><h3>Content &amp; Search</h3><p>Product copy and per-model content at scale, fitting and buying guides, set up so AI answer engines cite you. Straight version: search is a slow build here, and better content helps you sell whatever the rankings do.</p><div class="lens">seo-cluster-generator &middot; brand-voice &middot; eval-gated drafting</div></div>
+    <div class="wscard" style="--c:var(--greenv)"><div class="wtag">Quickest to show results</div><h3>Email &amp; Repeat Custom</h3><p>From your newsletter to a set of emails that run on their own: new-bike, cross-sell by model, win-back, seasonal, and asking for reviews. Your most valuable channel, run off the loyal base and reviews you already have. We check what's live before we build anything.</p><div class="lens">lifecycle-journey-builder &middot; brand-voice &middot; eval-gated drafting</div></div>
+    <div class="wscard" style="--c:var(--pinkv)"><div class="wtag">Grow the following</div><h3>Brand &amp; Audience</h3><p>Content made for each channel from one weekly story, a loop for customer photos and reviews, and getting you into the bike press where you're under-covered. One message across the channels, tied to the moments people actually buy.</p><div class="lens">social-content-factory &middot; earned-media-pitch &middot; message-house</div></div>
+  </div>
+  <div class="efound" style="margin-top:14px"><span class="ef">In the room</span><p>Not everything here is a system. Part of the job is sitting alongside you and the leadership team as an extra set of eyes: in the strategic conversations, on the big calls, with the numbers to hand.</p></div>
+  <div class="tradenote"><b>And when you're ready, the trade side.</b> The same approach helps your dealer and wholesale business: onboarding content, meeting prep, follow-ups and a simple pipeline view.</div>
+
+  <h3 class="subh">The operating model, made specific</h3>
+  <p class="submut">SOSTAC isn't a slide, it's how the four workstreams above get run day to day. What it actually means for Pyramid:</p>
+  <div class="seelist">
+    <div class="seerow"><div class="big">S<small>situation</small></div><div class="txt"><b>Growth has slowed from 15% to 5%, marketing is understaffed, and there's a 12-month hiring freeze.</b> Google Shopping is strong, Meta is untracked, and reporting still runs through a Google Doc.</div></div>
+    <div class="seerow"><div class="big">O<small>objectives</small></div><div class="txt"><b>Get growth back up without adding headcount.</b> Land the bike-styling-house repositioning while keeping fitment credibility, and replace guesswork with a daily data habit.</div></div>
+    <div class="seerow"><div class="big">S<small>strategy</small></div><div class="txt"><b>The three layers, in order.</b> Oracle for context, dashboard for aim, this engine for output. Messaging climbs from feature to benefit to emotion as the brand shifts.</div></div>
+    <div class="seerow"><div class="big">T<small>tactics</small></div><div class="txt"><b>The four workstreams above.</b> Operations &amp; Reporting, Content &amp; Search, Email &amp; Repeat Custom, Brand &amp; Audience.</div></div>
+    <div class="seerow"><div class="big">A<small>action</small></div><div class="txt"><b>The phased build plan, below.</b> Briefs, shot lists and call sheets, so campaigns are repeatable whoever is running them.</div></div>
+    <div class="seerow"><div class="big">C<small>control</small></div><div class="txt"><b>The daily dashboard, and a decision gate between every phase.</b> You see what's working before committing to the next one.</div></div>
+  </div>
+
+  <h3 class="subh">What this looks like</h3>
+  <p class="submut">Two examples of what we'd actually make: an email flow, and a week of social posts.</p>
+
+  <div class="practice">
+    <div class="prachead"><span class="pracn">01</span> Email: a flow that runs on its own</div>
+    <div class="submut2">A set of emails, sent off the back of what a customer does. Here's the new-bike one: four emails, written in your voice, one thing to click each, and it stops the moment they buy. The subject lines:</div>
+    <div class="mailflow">
+      <div class="mrow"><span class="mday">Day 0</span><b>"New bike? Fit these three first."</b></div>
+      <div class="mrow"><span class="mday">Day 3</span><b>"One wet ride is all it takes."</b></div>
+      <div class="mrow"><span class="mday">Day 6</span><b>"Fitted in minutes. No drilling needed."</b></div>
+      <div class="mrow"><span class="mday">Day 9</span><b>"Rated 4.9 by 2,000 riders."</b></div>
+    </div>
+  </div>
+
+  <div class="practice">
+    <div class="prachead"><span class="pracn">02</span> Social: one story, a week of posts</div>
+    <div class="submut2">A week of posts. We take one idea and shape it for each platform, no copy-and-paste across all of them. An example week:</div>
+    <div class="weekmini">
+      <div class="wm"><span class="wmd">Mon &middot; Instagram Reel</span>"This is your radiator after one wet ride." Muddy to clean.</div>
+      <div class="wm"><span class="wmd">Wed &middot; YouTube Short</span>Fit an Extenda Fenda in 60 seconds. No drill.</div>
+      <div class="wm"><span class="wmd">Fri &middot; LinkedIn</span>Fit-first parts cut dealer returns. The number that proves it.</div>
+      <div class="wm"><span class="wmd">Sun &middot; Instagram</span>"In 1986 we solved a problem nobody had named yet."</div>
+    </div>
+  </div>
+</section></div>
+
+<!-- 06 THE BUILD PLAN -->
+<div class="wrap"><section class="sec" id="roadmap">
+  <div class="kick"><span class="no">06</span> The build plan</div>
+  <h2>Phased, priced,<br>and stoppable.</h2>
+  <p class="intro">The three layers, broken into build phases with timings and costs. Indicative until we firm them up in phase one, and there's a decision gate between each phase.</p>
+  <div class="tl">
+
+    <div class="phase" style="--c:var(--pinkv)">
+      <div class="node">01</div>
+      <div class="pcard">
+        <div class="ptime">Weeks 1 to 2 &middot; Foundation</div>
+        <h3>Pyramid Oracle<span class="ptag">First</span></h3>
+        <div class="pcost"><span>~4 days</span><span class="money">~£1,600</span></div>
+        <p>The knowledge base the whole engagement reads from, loaded with the real background from the recordings and the audit.</p>
+        <ul>
+          <li>Records for meetings, decisions, people and projects, plus a reference layer for brand, products and customers</li>
+          <li>Source-traced, so every answer can be checked, and askable from Slack in plain English</li>
+          <li>One master index, and a light weekly tidy to stop it drifting</li>
+        </ul>
+        <div class="unlock"><b>Unlocks:</b> gives every later phase its context, and stops work drifting off the facts.</div>
+      </div>
+    </div>
+
+    <div class="phase" style="--c:var(--cyanv)">
+      <div class="node">02</div>
+      <div class="pcard">
+        <div class="ptime">Weeks 2 to 5 &middot; See the numbers</div>
+        <h3>BI &amp; Intelligence Layer</h3>
+        <div class="pcost"><span>~6 days</span><span class="money">~£2,400</span></div>
+        <p>Layer two goes in: the daily dashboard, as described above. From here on, everything is aimed with numbers, not hunches, and you can see whether it worked.</p>
+        <ul>
+          <li>Assess Meta properly against the other channels, and close off any attribution or ROAS blind spots</li>
+          <li>Product and margin level trading, not turnover in a Google Doc</li>
+          <li>Seasonal prompts, and a daily data habit for the team</li>
+        </ul>
+        <div class="unlock"><b>Unlocks:</b> decisions run on real numbers, and every move can be measured.</div>
+      </div>
+    </div>
+
+    <div class="phase" style="--c:var(--greenv)">
+      <div class="node">03</div>
+      <div class="pcard">
+        <div class="ptime">Weeks 4 to 10 &middot; Do more, same team</div>
+        <h3>Marketing System &amp; Engine</h3>
+        <div class="pcost"><span>~12 days</span><span class="money">~£4,800</span></div>
+        <p>The operating model and the content machine, built together, so campaigns are repeatable and the grind comes off the team. It starts once the data layer is in, because now every campaign is aimed off the dashboard and measured against it.</p>
+        <ul>
+          <li>SOSTAC operating model, with briefs, shot lists and call sheets</li>
+          <li>Content engine: weekly ideas, a standard mini-brief, hero plus captions, learning your tone</li>
+          <li>Email and social off the loyal base you already have</li>
+        </ul>
+        <div class="unlock"><b>Unlocks:</b> content at pace, filling the video gap without a new hire.</div>
+      </div>
+    </div>
+
+    <div class="phase" style="--c:var(--orange)">
+      <div class="node">04</div>
+      <div class="pcard">
+        <div class="ptime">Weeks 8 to 14 &middot; Runs alongside 03</div>
+        <h3>Operations &amp; Catalogue</h3>
+        <div class="pcost"><span>~8 days</span><span class="money">~£3,200</span></div>
+        <p>Take the repetitive load off the team. Listings and channel syncing across the catalogue and distributor brands.</p>
+        <ul>
+          <li>Automated listings, in voice and checked before they go live</li>
+          <li>Website, eBay and retailer feeds kept in step</li>
+          <li>New-model launches become easier and more efficient</li>
+        </ul>
+        <div class="unlock"><b>Unlocks:</b> time back for the people you cannot hire more of.</div>
+      </div>
+    </div>
+
+    <div class="phase" style="--c:var(--pinkv)">
+      <div class="node">05</div>
+      <div class="pcard">
+        <div class="ptime">Weeks 10 onward &middot; The styling-house story</div>
+        <h3>Brand &amp; Content Production</h3>
+        <div class="pcost"><span>Scoped together</span><span class="money">Priced after discovery</span></div>
+        <p>This is the phase we know the least about right now, and we'd rather say that than guess. The homepage brand film and the spray-shop piece came up on the day as strong directions, not a brief. This phase starts with proper discovery, understanding the business and what "premium lifestyle content" should mean for Pyramid, before we commit to a deliverable or a price.</p>
+        <ul>
+          <li>Discovery first: the business, the budget and the brief, built off the Oracle and the brand voice</li>
+          <li>Directions raised on the day to test: the homepage brand film, the Dream Machine spray-shop story, and a standalone Dream Machine site to give the paint story its own home (<a href="../dream-machine/" target="_blank" rel="noopener">working preview</a>)</li>
+          <li>A firm brief and cost once the direction is agreed, not before</li>
+        </ul>
+        <div class="unlock"><b>Unlocks:</b> a considered content direction, not a guess dressed up as one.</div>
+      </div>
+    </div>
+
+    <div class="phase" style="--c:var(--cyanv)">
+      <div class="node">06</div>
+      <div class="pcard">
+        <div class="ptime">Ongoing &middot; Keep compounding</div>
+        <h3>Optimise &amp; Compound</h3>
+        <div class="pcost"><span>Ongoing</span><span class="money">from ~£1,000/mo</span></div>
+        <p>Run it and keep tuning it. The Oracle stays current, the dashboard shows what is working, and the wins build on each other.</p>
+        <ul>
+          <li>A report each month, a proper review each quarter</li>
+          <li>A seat beside the leadership team: an extra set of eyes on the strategic calls, with the data to hand</li>
+          <li>Quarterly strategy sets the next priorities, and the cycle repeats</li>
+          <li>Trade and wholesale support added when you are ready</li>
+        </ul>
+        <div class="unlock"><b>Unlocks:</b> steady, measured growth from the same base, and sharper decisions at the top.</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="endnote"><b>Stop at any gate and keep everything built so far, still working.</b> Phases three to five overlap once the foundation is in. We start with the Oracle.</div>
+
+  <div class="commercials">
+    <h3>What it costs, and what it is worth</h3>
+    <p class="clead">Same day rate as an agency, roughly a quarter of the bill. Because we run AI teams, one of our days produces what takes an agency the best part of a week. So a build an agency would quote at forty grand, we deliver for around twelve.</p>
+    <div class="compare">
+      <div class="ccard us">
+        <div class="cw">Manual Focus</div>
+        <h4>The engine</h4>
+        <div class="cbig">~&pound;12k</div>
+        <ul>
+          <li>Core build, phases 1 to 4</li>
+          <li>Three to four times the speed, live in about 14 weeks</li>
+          <li>We run it, month to month</li>
+          <li>No hire needed</li>
+        </ul>
+      </div>
+      <div class="ccard">
+        <div class="cw">A traditional agency</div>
+        <h4>Same work</h4>
+        <div class="cbig">~&pound;40k+</div>
+        <ul>
+          <li>The same build, at standard pace</li>
+          <li>Plus a monthly retainer to keep it running</li>
+          <li>You brief it and manage them</li>
+        </ul>
+      </div>
+      <div class="ccard">
+        <div class="cw">Hiring in-house</div>
+        <h4>One person</h4>
+        <div class="cbig">&pound;35k+/yr</div>
+        <ul>
+          <li>Salary plus on-costs, and you are on a hiring freeze</li>
+          <li>Months to recruit and get up to speed</li>
+          <li>One person, one point of failure</li>
+        </ul>
+      </div>
+    </div>
+    <div class="valuebar"><b>And the lever that dwarfs all of it:</b> marketing moves the whole business. Nudging conversion from around 1.5 to 2.5 percent could lift the bottom line by roughly 70 percent. Against a number like that, the cost of the build is a rounding error. It pays for itself on the first real win, then keeps paying.</div>
+    <p class="cnote">Day counts and figures are indicative, firmed up in phase one before you commit to the build. Brand content (phase 5) and the ongoing run (phase 6) are quoted separately, as they scale with what you want.</p>
+  </div>
+</section></div>
+
+<!-- ALREADY BUILT: DREAM MACHINE CONCEPT -->
+<div class="wrap"><section class="sec" id="dreammachine">
+  <div class="kick"><span class="no">DM</span> Already built &middot; a working preview</div>
+  <h2>The Dream Machine site.<br>We've made a start.</h2>
+  <p class="intro">Rather than describe what the styling-house work could look like, we built a taste of it. A three-page concept site for Dream Machine: the paintwork story told properly, a premium look the category doesn't have, and a rebuilt gallery using their own bikes. It's a design direction to react to, not a finished site, and it's live right now.</p>
+  <p style="margin:18px 0 0"><a class="btn btn-primary" href="../dream-machine/" target="_blank" rel="noopener">View the live concept &rarr;</a></p>
+  <div class="tradenote" style="margin-top:22px"><b>Why it matters here.</b> This is the phase five discovery conversation made concrete: if the standalone Dream Machine site direction earns its place, this is the quality bar it starts from. Built in a day off the Oracle's background, which is rather the point.</div>
+</section></div>
+
+<!-- 05 STRAIGHT ANSWERS -->
+<div class="wrap"><section class="sec" id="why">
+  <div class="kick"><span class="no">07</span> Before you ask</div>
+  <h2>Your questions,<br>answered straight.</h2>
+  <div class="why">
+    <div class="wrow"><span class="wk">1</span><span class="wt"><b>"I'm already paying for a rebrand."</b> And it's good. We don't touch the identity, that's Heaviside's job. We build the machine that puts the new brand to work: the reporting, the content, the campaigns that carry it.</span></div>
+    <div class="wrow"><span class="wk">2</span><span class="wt"><b>"Whose time does this eat?"</b> Barely any. A kickoff, access to the accounts, and an hour or two a week to check direction. The whole point is taking work off your team, not adding to it.</span></div>
+    <div class="wrow"><span class="wk">3</span><span class="wt"><b>"AI content sounds like a robot."</b> You said it yourself, AI can't colour-match a fender. We don't ask it to. It does the grind, and everything passes a brand-voice check and human sign-off before a customer sees it. If it doesn't sound like Pyramid, it doesn't ship.</span></div>
+    <div class="wrow"><span class="wk">4</span><span class="wt"><b>"What am I committing to today?"</b> Two weeks and around &pound;1,600: the Oracle build and an honest baseline of your numbers. Every phase after has a decision point, and you can stop at any of them with everything built so far still yours and still working.</span></div>
+    <div class="wrow"><span class="wk">5</span><span class="wt"><b>"What about our data?"</b> Read access, on your accounts, granted by you and revocable by you. The Oracle lives in plain files you own. If we parted tomorrow, you keep the lot and it all still runs.</span></div>
+  </div>
+</section></div>
+
+<!-- 06 THE ASK -->
+<div class="wrap"><section class="sec" id="ask" style="border-top:none">
+  <div class="cta">
+    <div class="foring cta-ring" aria-hidden="true"><div class="persp"><div class="tilt"><div class="spin"></div></div></div></div>
+    <h3>Start with the Oracle.<br>Two weeks.</h3>
+    <p>Around &pound;1,600, and it's useful whatever you decide next. We build the Oracle, connect your data, and baseline the real numbers, then firm up the rest of the plan and the costs against them. If it's a fit, we crack on with the dashboard. If not, you keep the Oracle, the baseline and the plan. <span class="co">Either way you're further ahead than when we started.</span></p>
+    <div class="btnrow"><a class="btn btn-primary" href="mailto:james@manual-focus.co.uk?subject=Oracle%20build%20-%20let%27s%20go">Give James the nod</a><a class="btn btn-ghost-l" href="mailto:james@manual-focus.co.uk?subject=Question%20on%20the%20proposal">Got a question? Just ask</a></div>
+  </div>
+</section></div>
+
+<footer><div class="wrap">
+  <span class="mf-logo" id="mflogoFoot" style="height:26px"></span>
+  <span class="fm">Partnership proposal for Pyramid Motorcycle Accessories, prepared by Manual Focus, 21 July 2026, following the on-site day on 15 July. Figures are indicative and firmed up in the first phase. Confidential. <a href="https://manual-focus.co.uk" style="color:var(--rust);font-weight:700">manual-focus.co.uk</a></span>
+</div></footer>
+
+<script>
+const MF='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.85 137.78"><g><path d="M93.91.69h11.29l20.55,54.5h.18L146.48.69h11.29v65.6h-8.26V12.34h-.18l-19.82,53.95h-7.34l-19.82-53.95h-.18v53.95h-8.26V.69Z"/><path d="M175.42,49.87l-5.78,16.42h-8.53L185.33.69h9.27l24.41,65.6h-8.9l-5.78-16.42h-28.9ZM201.66,42.53l-11.65-34.22h-.18l-11.65,34.22h23.49Z"/><path d="M222.3.69h10.09l32.75,53.86h.18V.69h8.26v65.6h-10.09l-32.76-53.86h-.18v53.86h-8.26V.69Z"/><path d="M307.05,67.57c-17.52,0-25.14-9.73-25.14-23.12V.69h8.26v43.77c0,10.64,5.51,15.78,16.88,15.78s16.88-5.14,16.88-15.78V.69h8.26v43.77c0,13.4-7.62,23.12-25.14,23.12Z"/><path d="M346.32,49.87l-5.78,16.42h-8.53L356.23.69h9.27l24.41,65.6h-8.9l-5.78-16.42h-28.9ZM372.56,42.53l-11.65-34.22h-.18l-11.65,34.22h23.49Z"/><path d="M401.45.69v58.26h34.41v7.34h-42.66V.69h8.26Z"/><path d="M131.44,99.31v7.34h-29.27v29.64h-8.26v-65.6h44.5v7.34h-36.24v21.29h29.27Z"/><path d="M137.49,103.44c0-19.73,12.85-34.04,32.11-34.04s32.11,14.31,32.11,34.04-12.85,34.13-32.11,34.13-32.11-14.41-32.11-34.13ZM193.09,103.44c0-14.13-6.97-26.7-23.49-26.7s-23.49,12.57-23.49,26.7,6.97,26.79,23.49,26.79,23.49-12.66,23.49-26.79Z"/><path d="M235.88,76.74c-15.6,0-21.75,13.49-21.75,26.7s6.15,26.79,21.75,26.79c13.76,0,18.72-9.36,19.27-17.62h8.62c-1.47,14.5-11.74,24.96-27.89,24.96-17.98,0-30.37-14.31-30.37-34.13s12.39-34.04,30.37-34.04c16.06,0,26.33,10.46,27.89,22.94h-8.62c-1.19-6.24-5.6-15.6-19.27-15.6Z"/><path d="M293.89,137.57c-17.52,0-25.14-9.73-25.14-23.12v-43.77h8.26v43.77c0,10.64,5.51,15.78,16.88,15.78s16.88-5.14,16.88-15.78v-43.77h8.26v43.77c0,13.4-7.62,23.12-25.14,23.12Z"/><path d="M375.33,118.12c0,10.83-7.06,19.45-23.4,19.45s-27.8-8.62-28.72-23.31h8.62c.92,9.08,6.06,16.06,19.73,16.06,11.84,0,15.14-5.23,15.14-11.93,0-9.17-6.42-10.28-19.18-13.49-9.91-2.48-21.56-5.5-21.56-18.17,0-10.46,8.07-17.34,22.2-17.34,14.86,0,23.95,7.52,25.05,20.74h-8.62c-1.19-8.81-5.78-13.49-16.33-13.49-9.17,0-13.67,3.49-13.67,9.73,0,8.17,7.89,9.82,16.33,11.84,12.75,3.03,24.41,5.96,24.41,19.91Z"/><circle cx="44.94" cy="44.94" r="42.01"/><circle cx="44.94" cy="92.84" r="42.01"/></g></svg>';
+['mflogoTop','mflogoHero','mflogoFoot'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=MF;});
+document.querySelectorAll('.foring').forEach(fo=>{
+  const spin=fo.querySelector('.spin');if(!spin)return;const slices=28,thickness=50,half=(slices-1)/2;
+  ['top','bot'].forEach(w=>{const r=document.createElement('div');r.className='r3 '+w;
+    for(let i=0;i<slices;i++){const t=i/(slices-1),cd=Math.abs(i-half)/half,z=(i-half)*(thickness/slices),op=1-cd*0.4;
+      const s=document.createElement('div');s.className='sl';s.style.transform='translateZ('+z.toFixed(2)+'px)';s.style.opacity=op.toFixed(3);s.style.setProperty('--t',t.toFixed(4));r.appendChild(s);}
+    spin.appendChild(r);});
+  requestAnimationFrame(()=>fo.classList.add('in'));
+});
+(function(){
+ const HUBS=[
+  {name:'Business',short:'Business',color:'#FF2D78'},
+  {name:'Brand & Positioning',short:'Brand',color:'#00E5FF'},
+  {name:'Products & Catalogue',short:'Products',color:'#10bf7a'},
+  {name:'Customers',short:'Customers',color:'#f2643b'},
+  {name:'Competitors',short:'Competitors',color:'#FF2D78'},
+  {name:'Channels',short:'Channels',color:'#00E5FF'},
+  {name:'Data & Reporting',short:'Data',color:'#10bf7a'},
+  {name:'People & Team',short:'People',color:'#f2643b'},
+  {name:'Marketing System',short:'System',color:'#FF2D78'}
+ ];
+ // leaf notes with every hub they belong to; shared hubs create the cross-links
+ const LEAVES=[
+  ['Growth & Numbers',[0,6]],['Founder Bottleneck',[0,7]],['Hiring Freeze',[0,7]],['2022 Artefacts',[0]],
+  ['Styling House',[1]],['Dream Machine',[1,2]],['Messaging',[1,3,8]],['Brand References',[1,4]],['Extenda Fenda',[1,2]],['Visual Identity',[1]],
+  ['Fitment',[2,3]],['Chinese Copies',[2,4]],
+  ['Personas',[3]],['Rider Profile',[3]],
+  ['Product Rivals',[4]],
+  ['Search & SEO',[5,2]],['Email',[5]],['Social',[5]],['Google Shopping',[5,6]],['Meta Ads',[5,6]],
+  ['BI Dashboard',[6,8]],['Tools & Stack',[6]],
+  ['Andy',[7]],['Jake Video Gap',[7]],
+  ['SOSTAC',[8]],['Content Engine',[8]]
+ ];
+ const CARDNOTES=[
+  ['Growth & Numbers','Founder Bottleneck','Hiring Freeze','2022 Artefacts'],
+  ['Styling House','Dream Machine','Messaging','Brand References','Visual Identity'],
+  ['Fitment','Extenda Fenda','Dream Machine','Chinese Copies'],
+  ['Personas','Rider Profile','Fitment','Messaging'],
+  ['Product Rivals','Brand References','Chinese Copies'],
+  ['Search & SEO','Email','Social','Google Shopping','Meta Ads'],
+  ['BI Dashboard','Google Shopping','Meta Ads','Tools & Stack'],
+  ['Founder Bottleneck','Andy','Jake Video Gap'],
+  ['SOSTAC','Content Engine','BI Dashboard']
+ ];
+ const NS='http://www.w3.org/2000/svg';
+ const svg=document.getElementById('brainO'); if(!svg)return;
+ const W=900,H=780,CX=W/2,CY=H/2-5;
+ svg.setAttribute('viewBox','0 0 900 780');
+ function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+ // seeded random so the layout is stable
+ let seed=42;const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+ // build node + link lists
+ const nodes=[{id:'core',label:'Pyramid Oracle',type:'core',color:'#FF2D78',x:CX,y:CY,fx:true,deg:9}];
+ HUBS.forEach((h,i)=>{const a=(-90+i*40)*Math.PI/180;nodes.push({id:'h'+i,label:h.short,type:'hub',color:h.color,hub:i,x:CX+215*Math.cos(a)+(rnd()-0.5)*30,y:CY+215*Math.sin(a)+(rnd()-0.5)*30,deg:1});});
+ const links=[];
+ HUBS.forEach((h,i)=>links.push({s:0,t:1+i,len:205,hub:i}));
+ const leafIdx=[];
+ LEAVES.forEach(([name,hubs])=>{
+  const h0=hubs[0];const hn=nodes[1+h0];
+  const n={id:name,label:name,type:'leaf',color:HUBS[h0].color,x:hn.x+(rnd()-0.5)*90,y:hn.y+(rnd()-0.5)*90,deg:hubs.length};
+  nodes.push(n);const idx=nodes.length-1;leafIdx.push(idx);
+  hubs.forEach(hi=>{links.push({s:1+hi,t:idx,len:88,hub:hi});nodes[1+hi].deg++;});
+ });
+ // satellite records: the notes the Oracle accumulates (meetings, models, trading records)
+ function addSats(parent,count,len){
+  for(let k=0;k<count;k++){
+   const p=nodes[parent];
+   nodes.push({type:'sat',color:p.color,x:p.x+(rnd()-0.5)*50,y:p.y+(rnd()-0.5)*50,deg:1,r:1.7+rnd()*1.1});
+   links.push({s:parent,t:nodes.length-1,len:len,hub:p.hub!==undefined?p.hub:0,sat:true});
+  }
+ }
+ leafIdx.forEach(idx=>addSats(idx,2+Math.floor(rnd()*4),26));
+ for(let hi=0;hi<9;hi++)addSats(1+hi,6+Math.floor(rnd()*5),44);
+ addSats(3,8,40); // Products: model pages
+ addSats(7,8,40); // Data: trading records
+ // force simulation
+ const repK=(a,b)=>{if(a.type==='sat'||b.type==='sat')return 260;if(a.type==='leaf'||b.type==='leaf')return 1700;return 5600;};
+ for(let it=0;it<380;it++){
+  const cool=1-it/380, step=0.92*cool+0.06;
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+   const a=nodes[i],b=nodes[j];let dx=b.x-a.x,dy=b.y-a.y,d2=dx*dx+dy*dy||1;
+   if(d2>36000)continue;
+   const d=Math.sqrt(d2);const rep=repK(a,b)/d2;
+   dx/=d;dy/=d;
+   if(!a.fx){a.x-=dx*rep*step;a.y-=dy*rep*step;}
+   if(!b.fx){b.x+=dx*rep*step;b.y+=dy*rep*step;}
+  }
+  links.forEach(L=>{
+   const a=nodes[L.s],b=nodes[L.t];let dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)||1;
+   const f=(d-L.len)*0.02*step;dx/=d;dy/=d;
+   if(!a.fx){a.x+=dx*f*d*0.02;a.y+=dy*f*d*0.02;}
+   if(!b.fx){b.x-=dx*f*d*0.02;b.y-=dy*f*d*0.02;}
+  });
+  nodes.forEach(n=>{if(n.fx)return;
+   n.x+=(CX-n.x)*0.0022*step;n.y+=(CY-n.y)*0.0022*step;
+   n.x=Math.max(30,Math.min(W-30,n.x));n.y=Math.max(26,Math.min(H-26,n.y));});
+ }
+ // glow filter
+ const defs=el('defs',{});
+ const f=el('filter',{id:'oglow',x:'-80%',y:'-80%',width:'260%',height:'260%'});
+ f.appendChild(el('feGaussianBlur',{'in':'SourceGraphic',stdDeviation:'3.2',result:'b'}));
+ const m=el('feMerge',{});m.appendChild(el('feMergeNode',{'in':'b'}));m.appendChild(el('feMergeNode',{'in':'SourceGraphic'}));f.appendChild(m);
+ defs.appendChild(f);svg.appendChild(defs);
+ // draw links then nodes, Obsidian-style: faint ink lines, mostly small mono dots
+ const linkEls=links.map(L=>{
+  const op=L.s===0?0.26:(L.sat?0.09:0.15);
+  const ln=el('line',{stroke:'#F2EDE6','stroke-width':L.s===0?1.1:0.7,'stroke-opacity':op});
+  svg.appendChild(ln);return ln;
+ });
+ const nodeEls=nodes.map((n,i)=>{
+  const g=el('g',{});
+  let r=n.type==='core'?14:n.type==='hub'?7+n.deg*0.35:n.type==='leaf'?4.2:n.r;
+  n.r=r;
+  if(n.type==='sat'){
+   g.appendChild(el('circle',{r:r,fill:'#8C8780',opacity:0.8}));
+  }else if(n.type==='leaf'){
+   g.appendChild(el('circle',{r:r,fill:n.color,opacity:0.62}));
+  }else{
+   g.appendChild(el('circle',{r:r+3,fill:n.color,opacity:0.16,filter:'url(#oglow)'}));
+   g.appendChild(el('circle',{r:r,fill:n.color,filter:'url(#oglow)'}));
+  }
+  if(n.type==='core'){
+   const t=el('text',{y:r+20,'text-anchor':'middle',fill:'#F2EDE6','font-size':16});t.textContent='PYRAMID ORACLE';g.appendChild(t);
+  }else if(n.type==='hub'){
+   const t=el('text',{y:r+14,'text-anchor':'middle',fill:'#F2EDE6','font-size':12});t.textContent=n.label.toUpperCase();g.appendChild(t);
+   g.style.cursor='pointer';
+   g.addEventListener('click',()=>{const c=document.getElementById('ocard-'+n.hub);if(c)c.scrollIntoView({behavior:'smooth',block:'center'});});
+  }
+  svg.appendChild(g);return g;
+ });
+ // gentle drift, Obsidian-style
+ const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ nodes.forEach(n=>{n.ph=rnd()*6.283;n.amp=n.type==='core'?0:n.type==='hub'?1.4:n.type==='leaf'?2.2:2.8;n.sp=0.4+rnd()*0.5;});
+ function draw(t){
+  nodes.forEach((n,i)=>{
+   n.dx=n.x+Math.sin(t*0.001*n.sp+n.ph)*n.amp;
+   n.dy=n.y+Math.cos(t*0.00085*n.sp+n.ph*1.7)*n.amp;
+   nodeEls[i].setAttribute('transform','translate('+n.dx+','+n.dy+')');
+  });
+  links.forEach((L,i)=>{
+   linkEls[i].setAttribute('x1',nodes[L.s].dx);linkEls[i].setAttribute('y1',nodes[L.s].dy);
+   linkEls[i].setAttribute('x2',nodes[L.t].dx);linkEls[i].setAttribute('y2',nodes[L.t].dy);
+  });
+  if(!reduced)requestAnimationFrame(draw);
+ }
+ draw(0);
+ const oc=document.getElementById('ocards');
+ if(oc)HUBS.forEach((h,i)=>{const d=document.createElement('div');d.className='ocard';d.id='ocard-'+i;d.style.setProperty('--c',h.color);d.innerHTML='<h4>'+h.name+'</h4><div class="ochips">'+CARDNOTES[i].map(n=>'<span>'+n+'</span>').join('')+'</div>';oc.appendChild(d);});
+})();
+</script>
+</body>
+</html>
